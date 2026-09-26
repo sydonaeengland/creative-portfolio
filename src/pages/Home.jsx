@@ -90,7 +90,7 @@ export default function Home() {
       </header>
 
       <section className="handoff">
-        <Reveal as="p" className="eyebrow">ONE CREATIVE. MANY MEDIUMS.</Reveal>
+        <Reveal as="p" className="eyebrow" style={{ marginBottom: 24 }}>ONE CREATIVE. MANY MEDIUMS.</Reveal>
         <Reveal as="h2" className="handoff-headline display">
           ONE CREATIVE.<br />MANY MEDIUMS.
         </Reveal>
