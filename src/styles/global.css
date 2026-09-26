@@ -1,0 +1,343 @@
+/* ==========================================================================
+   THE CREATIVE ARCHIVE — global.css
+   Design tokens, typography, nav, transitions, utilities.
+   ========================================================================== */
+
+:root{
+  color-scheme: light;
+
+  /* ---- palette: purple + white + sparing black ---- */
+  --purple:        #6B21E8;
+  --purple-deep:    #4A0FB8;
+  --purple-darker:  #2c0a76;
+  --purple-soft:    #9B6AF5;
+  --purple-tint:    #F1E9FE;
+  --white:          #FEFDFB;
+  --black:          #0A0A0C;
+  --ink:            #17151C;
+  --ink-soft:       rgba(23,21,28,0.62);
+  --hairline:       rgba(23,21,28,0.12);
+  --hairline-on-purple: rgba(255,255,255,0.28);
+
+  /* ---- type ---- */
+  --font-display: 'Anton', 'Arial Narrow Bold', sans-serif;
+  --font-body: 'Inter', 'Work Sans', -apple-system, sans-serif;
+
+  /* ---- rhythm ---- */
+  --gutter: clamp(20px, 5vw, 64px);
+  --radius: 2px;
+
+  /* ---- motion ---- */
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-inout: cubic-bezier(.65,0,.35,1);
+  --dur-fast: .25s;
+  --dur-med: .6s;
+  --dur-slow: 1.1s;
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *, *::before, *::after{ animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+
+body{
+  margin: 0;
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img{ max-width: 100%; display: block; }
+a{ color: inherit; text-decoration: none; }
+button{ font-family: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+ul{ margin: 0; padding: 0; list-style: none; }
+h1,h2,h3,h4,p{ margin: 0; }
+
+/* -------------------------------------------------------------------------
+   Display headline utility
+   ------------------------------------------------------------------------- */
+.display{
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.86;
+  font-weight: 400;
+}
+
+.bulge-hover{
+  display: inline-block;
+  transition: transform var(--dur-fast) var(--ease-out);
+  transform-origin: left center;
+}
+.bulge-hover:hover{
+  transform: scaleX(1.06) scaleY(0.98);
+}
+
+.eyebrow{
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.on-purple .eyebrow{ color: rgba(255,255,255,0.72); }
+
+/* -------------------------------------------------------------------------
+   Layout helpers
+   ------------------------------------------------------------------------- */
+.wrap{ padding-left: var(--gutter); padding-right: var(--gutter); }
+.visually-hidden{
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* -------------------------------------------------------------------------
+   Purple field — gives flat purple fills dimension: a directional gradient
+   plus a faint grain, instead of a single flat hex.
+   ------------------------------------------------------------------------- */
+.purple-field{
+  position: relative;
+  background:
+    radial-gradient(120% 90% at 18% 8%, rgba(255,255,255,0.10), transparent 55%),
+    radial-gradient(100% 80% at 88% 100%, rgba(10,2,28,0.75), transparent 62%),
+    linear-gradient(160deg, var(--purple) 0%, var(--purple-deep) 55%, var(--purple-darker) 100%);
+}
+.purple-field::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+.purple-field > *{ position: relative; z-index: 1; }
+
+/* -------------------------------------------------------------------------
+   Nav
+   ------------------------------------------------------------------------- */
+.site-nav{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px var(--gutter);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  background: rgba(254,253,251,0.82);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border-bottom: 1px solid var(--hairline);
+}
+.site-nav a, .site-nav button{ color: inherit; }
+.on-purple-page .site-nav{
+  color: #fff;
+  background: rgba(74,15,184,0.55);
+  border-bottom-color: var(--hairline-on-purple);
+}
+
+.nav-mark{
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+.nav-list{
+  display: flex;
+  gap: 22px;
+}
+.nav-list a{
+  position: relative;
+  padding-bottom: 2px;
+  transition: opacity .2s;
+}
+.nav-list a .n{ opacity: 0.5; margin-right: 4px; }
+.nav-list a:hover{ opacity: 0.7; }
+.nav-list a.is-current::after{
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -3px;
+  height: 1px;
+  background: currentColor;
+}
+
+.nav-toggle{ display: none; }
+
+@media (max-width: 860px){
+  .nav-list{ display: none; }
+  .nav-toggle{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+  }
+}
+
+/* Mobile fullscreen menu */
+.mobile-menu{
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--gutter);
+}
+.mobile-menu > *{ position: relative; z-index: 1; }
+.mobile-menu-close{
+  position: absolute;
+  top: 18px; right: var(--gutter);
+  z-index: 2;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.mobile-menu-list a{
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(40px, 14vw, 76px);
+  color: #fff;
+  line-height: 1.05;
+  padding: 6px 0;
+  text-transform: uppercase;
+}
+.mobile-menu-list .n{ opacity: 0.5; font-size: 0.4em; vertical-align: middle; margin-right: 10px; }
+
+/* -------------------------------------------------------------------------
+   Placeholder media blocks (swap for real images/video later)
+   ------------------------------------------------------------------------- */
+.ph{
+  position: relative;
+  background: linear-gradient(135deg, var(--purple-tint), #fff 60%);
+  border: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--purple);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  overflow: hidden;
+}
+.ph::before{
+  content: attr(data-ph);
+  padding: 12px;
+}
+.ph.ph-dark{
+  background: linear-gradient(135deg, #2a1350, #150826);
+  color: rgba(255,255,255,0.55);
+  border-color: rgba(255,255,255,0.14);
+}
+
+/* -------------------------------------------------------------------------
+   RAW / FINAL toggle
+   ------------------------------------------------------------------------- */
+.rf-toggle{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  user-select: none;
+}
+.rf-toggle .side{ opacity: 0.4; transition: opacity .2s; cursor: pointer; }
+.rf-toggle .side.is-active{ opacity: 1; color: var(--purple); }
+.rf-switch{
+  position: relative;
+  width: 40px; height: 20px;
+  border-radius: 999px;
+  background: var(--hairline);
+  border: 1px solid var(--ink-soft);
+  cursor: pointer;
+  flex: none;
+}
+.rf-switch::after{
+  content: '';
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--purple);
+  transition: transform .28s var(--ease-inout);
+}
+.rf-toggle[data-state="final"] .rf-switch::after{ transform: translateX(20px); }
+.rf-toggle[data-state="final"] .side.raw{ opacity: 0.4; color: inherit; }
+.rf-toggle[data-state="final"] .side.final{ opacity: 1; color: var(--purple); }
+.rf-toggle[data-state="raw"] .side.raw{ opacity: 1; color: var(--purple); }
+.rf-toggle[data-state="raw"] .side.final{ opacity: 0.4; color: inherit; }
+
+.rf-stage{ position: relative; overflow: hidden; }
+.rf-stage .rf-asset{
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity .45s var(--ease-out), transform .45s var(--ease-out);
+  pointer-events: none;
+}
+.rf-stage .rf-asset.is-visible{
+  position: relative;
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: all;
+}
+
+/* -------------------------------------------------------------------------
+   Handwritten annotation captions
+   ------------------------------------------------------------------------- */
+.annotation{
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: var(--purple);
+  line-height: 1.1;
+  transform: rotate(-3deg);
+}
+
+/* -------------------------------------------------------------------------
+   Section footer — "NEXT ARCHIVE"
+   ------------------------------------------------------------------------- */
+.next-archive{
+  display: block;
+  padding: 64px var(--gutter) 56px;
+  border-top: 1px solid var(--hairline);
+}
+.next-archive .headline{
+  font-family: var(--font-display);
+  font-size: clamp(36px, 8vw, 92px);
+  text-transform: uppercase;
+  display: inline-block;
+  transition: transform var(--dur-fast) var(--ease-out), letter-spacing var(--dur-fast) var(--ease-out);
+}
+.next-archive:hover .headline{ transform: scaleX(1.04); letter-spacing: 0.01em; }
+.next-archive .arrow{ display: inline-block; margin-left: 18px; transition: transform .3s var(--ease-out); }
+.next-archive:hover .arrow{ transform: translateX(10px); }
+
+/* -------------------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------------------- */
+.micro-footer{
+  padding: 18px var(--gutter) 28px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: space-between;
+}
+.on-purple .micro-footer{ color: rgba(255,255,255,0.55); }

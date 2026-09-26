@@ -1,52 +1,65 @@
-# The Creative Archive — Syd / SyDigitalStudios
+# The Creative Archive — Sydonae England / SyDigitalStudios
 
-A multi-page portfolio site (plain HTML/CSS/JS, no build step, no dependencies
-beyond Google Fonts). Open `index.html` in a browser, or serve the folder with
-any static server.
+A multi-page portfolio site built with **React + Vite + React Router +
+Framer Motion**.
+
+## Getting started
+
+```bash
+npm install
+npm run dev       # start the dev server
+npm run build     # production build → dist/
+npm run preview   # preview the production build locally
+```
 
 ## Structure
 
 ```
-index.html          00 — Home (hero, parallax, handoff)
-journey.html         01 — Journey (winding timeline, 2020–2026)
-design.html           02 — Design (poster wall + case studies)
-photography.html       03 — Photography (calm/cinematic layouts)
-motion.html              04 — Motion (video grid, hover-scrub)
-social.html                05 — Social (campaign case studies, phone mockups)
-contact.html                  06 — Contact (purple bookend)
+src/
+  main.jsx              — app entry
+  App.jsx                — routes + shared layout
+  components/
+    Nav.jsx                — desktop nav + mobile fullscreen menu
+    PageFade.jsx            — per-page mount/unmount fade
+    Reveal.jsx               — scroll-triggered reveal wrapper
+    Placeholder.jsx           — labeled placeholder block (swap `src` for real media)
+    RawFinalToggle.jsx         — the RAW / FINAL signature interaction
+    VideoCard.jsx                — video-editing-language card w/ hover scrub
+    NextArchive.jsx                — "NEXT ARCHIVE" footer link (auto-advances)
+    Footer.jsx                      — micro footer
+  data/
+    routes.js              — central nav/section registry (00–06)
+    designProjects.js       — Design page project data
+  pages/
+    Home.jsx, Journey.jsx, Design.jsx, Photography.jsx,
+    VideoEditing.jsx, Social.jsx, Contact.jsx
+  styles/
+    global.css              — tokens, typography, nav, RAW/FINAL toggle, etc.
+    home.css, journey.css, design.css, photography.css,
+    videoEditing.css, social.css, contact.css   — per-page styles
 
-css/base.css     — tokens, typography, nav, cursor, transitions, RAW/FINAL toggle
-css/<page>.css   — per-page styles
-js/main.js       — cursor, mobile menu, page transitions, scroll reveal,
-                   RAW/FINAL toggle logic, video in-view/hover-scrub
+public/assets/           — real media (served as-is, referenced by URL)
+  img/graphics/             — real graphic design work
+  img/photography/           — real photography (swap placeholders in here)
+  video/graphics/, video/photography/  — same split for video
+
+legacy-html/              — the original static HTML/CSS/JS version, kept for
+                             reference. Not part of the live build.
 ```
 
 ## Swapping in real media
 
-Every placeholder is a `<div class="ph" data-ph="LABEL">` (or `.ph-dark` on
-dark backgrounds). Replace with a real `<img>`/`<video>` and drop the `.ph`
-class, or set the label div as a background behind your media during
-development. Video cards on the Motion page expect a `<video>` element with
-`data-autoplay-inview` to get the "plays only when in view, only one at a
-time" behavior, and a wrapping `[data-scrub]` for hover-scrub.
+`<Placeholder label="..." src={...} />` renders a labeled placeholder block
+until you pass `src` (a path under `public/assets/...`), at which point it
+renders the real image. Drop files into `public/assets/img/graphics` or
+`public/assets/img/photography`, then update the relevant page/data file's
+`src`.
 
 ## RAW / FINAL toggle
 
-Reusable pattern — wrap a toggle + stage in a shared container with
-`data-rf-group`:
-
-```html
-<div data-rf-group>
-  <div class="rf-toggle" data-state="final">
-    <span class="side raw">Raw</span>
-    <button class="rf-switch"></button>
-    <span class="side final">Final</span>
-  </div>
-  <div class="rf-stage" data-rf-stage>
-    <div class="rf-asset" data-rf="raw">...</div>
-    <div class="rf-asset is-visible" data-rf="final">...</div>
-  </div>
-</div>
+```jsx
+<RawFinalToggle
+  raw={<Placeholder label="Sketch" />}
+  final={<Placeholder label="Final" src="/assets/img/graphics/final.png" />}
+/>
 ```
-
-`js/main.js` wires the click behavior automatically on page load.
