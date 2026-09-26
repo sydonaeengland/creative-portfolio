@@ -30,9 +30,11 @@ function useFirstVisitLoader() {
     if (phase === 'done') return undefined;
     try { sessionStorage.setItem('archiveVisited', '1'); } catch {}
 
-    const toConverge = setTimeout(() => setPhase('converge'), 1450);
-    const toOut = setTimeout(() => setPhase('out'), 2050);
-    const toDone = setTimeout(() => setPhase('done'), 2650);
+    // One beat cycle (photo/design/social/video) is 4 x 480ms = 1920ms;
+    // let it play through fully once plus a bit before converging.
+    const toConverge = setTimeout(() => setPhase('converge'), 2150);
+    const toOut = setTimeout(() => setPhase('out'), 2750);
+    const toDone = setTimeout(() => setPhase('done'), 3350);
     return () => { clearTimeout(toConverge); clearTimeout(toOut); clearTimeout(toDone); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
