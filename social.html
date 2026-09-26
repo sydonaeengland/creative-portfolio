@@ -7,6 +7,18 @@
 <meta name="description" content="Social media management by Sydonae England — campaigns that combine design, photo, video and strategy.">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/social.css">
+<script>
+  // Pre-paint cover: if arriving via an in-site transition link, draw the
+  // covering panel synchronously before first paint, so there's no flash
+  // of the raw page before main.js (deferred) takes over the wipe-away.
+  (function(){
+    try{
+      if (sessionStorage.getItem('archiveTransitionLabel')){
+        document.write('<div id="archive-preboot"></div>');
+      }
+    }catch(e){}
+  })();
+</script>
 </head>
 <body>
 

@@ -7,6 +7,18 @@
 <meta name="description" content="Graphic design work by Sydonae England — campaigns, event graphics, brand collateral.">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/design.css">
+<script>
+  // Pre-paint cover: if arriving via an in-site transition link, draw the
+  // covering panel synchronously before first paint, so there's no flash
+  // of the raw page before main.js (deferred) takes over the wipe-away.
+  (function(){
+    try{
+      if (sessionStorage.getItem('archiveTransitionLabel')){
+        document.write('<div id="archive-preboot"></div>');
+      }
+    }catch(e){}
+  })();
+</script>
 </head>
 <body>
 
@@ -58,14 +70,14 @@
       </article>
 
       <article class="poster-card p3" data-case="tournament" data-reveal>
-        <div class="frame"><div class="ph" data-ph="TOURNAMENT GRAPHIC"></div></div>
-        <div class="meta"><span class="title">Tournament Set</span><span class="year">2022</span></div>
+        <div class="frame"><img src="assets/img/graphics/dare-to-dream-competitive-program-summer-2026.png" alt="Dare to Dream Sporting Academy — 2026 Summer Term Competitive Program schedule graphic"></div>
+        <div class="meta"><span class="title">Competitive Program</span><span class="year">2026</span></div>
       </article>
 
       <article class="poster-card p4" data-case="uwi-publications" data-reveal>
         <div class="name-behind">PUBLICATIONS</div>
-        <div class="frame"><div class="ph" data-ph="UWI PUBLICATIONS SPREAD"></div></div>
-        <div class="meta"><span class="title">UWI Publications</span><span class="year">2025</span></div>
+        <div class="frame"><img src="assets/img/graphics/uwi-computing-meet-the-exec-sydonae-england.png" alt="UWI Computing Subcommittee — Meet the Exec 2025/2026 graphic featuring Sydonae England, Publications Chairperson"></div>
+        <div class="meta"><span class="title">Meet the Exec</span><span class="year">2025</span></div>
       </article>
 
       <article class="poster-card p5" data-case="airbnb" data-reveal>

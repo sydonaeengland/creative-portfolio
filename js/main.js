@@ -39,15 +39,19 @@
 
     var incoming = sessionStorage.getItem('archiveTransitionLabel');
     if (incoming){
+      // A synchronous inline script in <head> already painted a plain
+      // covering div (#archive-preboot) before first paint, so there is
+      // no flash. Swap it for the real panel in the same state — still
+      // fully covering, no animation — then hold briefly and wipe away.
+      var preboot = document.getElementById('archive-preboot');
+      if (preboot) preboot.remove();
       labelEl.textContent = incoming;
-      panel.classList.add('is-active');
-      requestAnimationFrame(function(){
-        setTimeout(function(){
-          panel.classList.add('is-leaving');
-          panel.classList.remove('is-active');
-        }, 350);
-      });
+      panel.classList.add('is-covering');
       sessionStorage.removeItem('archiveTransitionLabel');
+      setTimeout(function(){
+        panel.classList.add('is-leaving');
+        panel.classList.remove('is-covering');
+      }, 450);
     }
 
     document.querySelectorAll('a[data-transition]').forEach(function(link){
@@ -55,11 +59,12 @@
         var href = link.getAttribute('href');
         if (!href || href.charAt(0) === '#') return;
         e.preventDefault();
+        if (panel.classList.contains('is-active')) return; // already transitioning
         var lbl = link.getAttribute('data-transition');
         labelEl.textContent = lbl;
         panel.classList.add('is-active');
         sessionStorage.setItem('archiveTransitionLabel', lbl);
-        setTimeout(function(){ window.location.href = href; }, 620);
+        setTimeout(function(){ window.location.href = href; }, 650);
       });
     });
   }

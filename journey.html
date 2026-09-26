@@ -7,6 +7,18 @@
 <meta name="description" content="How Sydonae England's creative path unfolded — from 2020 to now.">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/journey.css">
+<script>
+  // Pre-paint cover: if arriving via an in-site transition link, draw the
+  // covering panel synchronously before first paint, so there's no flash
+  // of the raw page before main.js (deferred) takes over the wipe-away.
+  (function(){
+    try{
+      if (sessionStorage.getItem('archiveTransitionLabel')){
+        document.write('<div id="archive-preboot"></div>');
+      }
+    }catch(e){}
+  })();
+</script>
 </head>
 <body>
 

@@ -81,9 +81,9 @@ h1,h2,h3,h4,p{ margin: 0; }
 .page-intro.on-purple{
   position: relative;
   background:
-    radial-gradient(120% 90% at 18% 8%, rgba(255,255,255,0.14), transparent 55%),
-    radial-gradient(90% 70% at 88% 96%, rgba(20,4,56,0.55), transparent 60%),
-    linear-gradient(155deg, var(--purple-soft) 0%, var(--purple) 42%, var(--purple-deep) 100%);
+    radial-gradient(120% 90% at 18% 8%, rgba(255,255,255,0.10), transparent 55%),
+    radial-gradient(100% 80% at 88% 100%, rgba(10,2,28,0.75), transparent 62%),
+    linear-gradient(160deg, var(--purple) 0%, var(--purple-deep) 55%, #2c0a76 100%);
 }
 .purple-field::after,
 .mobile-menu::after,
@@ -258,10 +258,33 @@ body.on-purple .site-nav{
   pointer-events: none;
   transform: translateY(100%);
 }
+
+/* Outgoing click: panel slides up to cover the current page. */
 .transition-panel.is-active{
   pointer-events: all;
   animation: panel-in var(--dur-med) var(--ease-inout) forwards;
 }
+
+/* Incoming page load: panel is already covering — no slide, just present —
+   then holds briefly before wiping away. Prevents the double-animation
+   "flash" of sliding in again on a page that's already covered. */
+.transition-panel.is-covering{
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+/* Pre-paint cover: an inline-styled placeholder injected synchronously in
+   <head> (see the boot script in each page) so the panel is already
+   covering the screen at first paint — before any CSS/JS has loaded —
+   eliminating any flash of the raw page underneath. main.js swaps this
+   for the real .transition-panel on DOMContentLoaded. */
+#archive-preboot{
+  position: fixed;
+  inset: 0;
+  z-index: 2001;
+  background: var(--purple, #6B21E8);
+}
+
 .transition-panel.is-leaving{
   animation: panel-out var(--dur-med) var(--ease-inout) forwards;
 }
@@ -274,8 +297,12 @@ body.on-purple .site-nav{
   text-transform: uppercase;
   opacity: 0;
 }
-.transition-panel.is-active .label{
+.transition-panel.is-active .label,
+.transition-panel.is-covering .label{
   animation: label-in .5s var(--ease-out) .15s forwards;
+}
+.transition-panel.is-leaving .label{
+  animation: label-out .4s var(--ease-inout) forwards;
 }
 @keyframes panel-in{
   from{ transform: translateY(100%); }
@@ -288,6 +315,10 @@ body.on-purple .site-nav{
 @keyframes label-in{
   from{ opacity: 0; transform: translateY(16px); }
   to{ opacity: 1; transform: translateY(0); }
+}
+@keyframes label-out{
+  from{ opacity: 1; transform: translateY(0); }
+  to{ opacity: 0; transform: translateY(-12px); }
 }
 
 /* -------------------------------------------------------------------------
