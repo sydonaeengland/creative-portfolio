@@ -7,31 +7,19 @@
 <meta name="description" content="Video editing and motion work by Sydonae England — campaigns, event recaps, social edits.">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/video-editing.css">
-<script>
-  // Pre-paint cover: if arriving via an in-site transition link, draw the
-  // covering panel synchronously before first paint, so there's no flash
-  // of the raw page before main.js (deferred) takes over the wipe-away.
-  (function(){
-    try{
-      if (sessionStorage.getItem('archiveTransitionLabel')){
-        document.write('<div id="archive-preboot"></div>');
-      }
-    }catch(e){}
-  })();
-</script>
 </head>
 <body>
 
   <nav class="site-nav">
     <a href="index.html" class="nav-mark">SYD°</a>
     <ul class="nav-list">
-      <li><a href="index.html" data-transition="00 HOME"><span class="n">00</span>HOME</a></li>
-      <li><a href="journey.html" data-transition="01 JOURNEY"><span class="n">01</span>JOURNEY</a></li>
-      <li><a href="design.html" data-transition="02 DESIGN"><span class="n">02</span>DESIGN</a></li>
-      <li><a href="photography.html" data-transition="03 PHOTO"><span class="n">03</span>PHOTO</a></li>
+      <li><a href="index.html"><span class="n">00</span>HOME</a></li>
+      <li><a href="journey.html"><span class="n">01</span>JOURNEY</a></li>
+      <li><a href="design.html"><span class="n">02</span>DESIGN</a></li>
+      <li><a href="photography.html"><span class="n">03</span>PHOTO</a></li>
       <li><a href="video-editing.html" class="is-current"><span class="n">04</span>VIDEO</a></li>
-      <li><a href="social.html" data-transition="05 SOCIAL"><span class="n">05</span>SOCIAL</a></li>
-      <li><a href="contact.html" data-transition="06 CONTACT"><span class="n">06</span>CONTACT</a></li>
+      <li><a href="social.html"><span class="n">05</span>SOCIAL</a></li>
+      <li><a href="contact.html"><span class="n">06</span>CONTACT</a></li>
     </ul>
     <button class="nav-toggle">MENU <span>+</span></button>
   </nav>
@@ -146,7 +134,7 @@
     </div>
   </section>
 
-  <a href="social.html" data-transition="05 SOCIAL" class="next-archive bulge-hover" style="display:block;">
+  <a href="social.html" class="next-archive bulge-hover" style="display:block;">
     <span class="eyebrow">NEXT ARCHIVE</span><br>
     <span class="headline display">05 SOCIAL MEDIA <span class="arrow">→</span></span>
   </a>

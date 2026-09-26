@@ -25,51 +25,6 @@
   }
 
   /* ---------------------------------------------------------------------
-     Page transitions
-     Any link with data-transition="LABEL" triggers a full-panel wipe
-     before navigating. On load, if sessionStorage flags an incoming
-     transition, play it in reverse (panel already covering, wipes away).
-     --------------------------------------------------------------------- */
-  function initTransitions(){
-    var panel = document.createElement('div');
-    panel.className = 'transition-panel';
-    panel.innerHTML = '<div class="label"></div>';
-    document.body.appendChild(panel);
-    var labelEl = panel.querySelector('.label');
-
-    var incoming = sessionStorage.getItem('archiveTransitionLabel');
-    if (incoming){
-      // A synchronous inline script in <head> already painted a plain
-      // covering div (#archive-preboot) before first paint, so there is
-      // no flash. Swap it for the real panel in the same state — still
-      // fully covering, no animation — then hold briefly and wipe away.
-      var preboot = document.getElementById('archive-preboot');
-      if (preboot) preboot.remove();
-      labelEl.textContent = incoming;
-      panel.classList.add('is-covering');
-      sessionStorage.removeItem('archiveTransitionLabel');
-      setTimeout(function(){
-        panel.classList.add('is-leaving');
-        panel.classList.remove('is-covering');
-      }, 450);
-    }
-
-    document.querySelectorAll('a[data-transition]').forEach(function(link){
-      link.addEventListener('click', function(e){
-        var href = link.getAttribute('href');
-        if (!href || href.charAt(0) === '#') return;
-        e.preventDefault();
-        if (panel.classList.contains('is-active')) return; // already transitioning
-        var lbl = link.getAttribute('data-transition');
-        labelEl.textContent = lbl;
-        panel.classList.add('is-active');
-        sessionStorage.setItem('archiveTransitionLabel', lbl);
-        setTimeout(function(){ window.location.href = href; }, 650);
-      });
-    });
-  }
-
-  /* ---------------------------------------------------------------------
      Scroll reveal
      --------------------------------------------------------------------- */
   function initReveal(){
@@ -174,7 +129,6 @@
 
   document.addEventListener('DOMContentLoaded', function(){
     initMobileMenu();
-    initTransitions();
     initReveal();
     initRawFinal();
     initVideoBehavior();
