@@ -127,6 +127,11 @@
      needed. Kept as a hook for future per-page nav state.
      --------------------------------------------------------------------- */
 
+  // Reveal the page: this script runs at the end of <body>, after markup
+  // has parsed, so the page is ready — drop `.is-loading` right away and
+  // let the CSS transition fade it in smoothly instead of popping in.
+  document.documentElement.classList.remove('is-loading');
+
   document.addEventListener('DOMContentLoaded', function(){
     initMobileMenu();
     initReveal();
