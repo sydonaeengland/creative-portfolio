@@ -21,7 +21,7 @@ export const DESIGN_PROJECTS = [
     tools: 'Photoshop, Illustrator',
     brief: "A welcome-back graphic for Computing students starting Semester 2 — needed to feel encouraging without being generic.",
     process: 'Used a torn-notebook-page motif and a back-to-school prop stack to keep the tone warm and a little playful against the department\'s usual deep-blue palette.',
-    image: '/assets/img/graphics/uwi-computing-new-semester-2025-26.png',
+    image: '/assets/graphics/uwi-computing-new-semester-2025-26.png',
     label: 'UWI Computing Subcommittee — New Semester, Same Ambition, Semester 2 2025/26 welcome graphic',
   },
   {
@@ -33,7 +33,7 @@ export const DESIGN_PROJECTS = [
     tools: 'Photoshop, Canva',
     brief: "Same-day turnaround graphics for Dare to Dream Sporting Academy's competitive program schedule — pricing, sessions, and core-team breakdowns at a glance.",
     process: 'Built a modular template covering football, swimming and track schedules so each new term reuses the same fast layout.',
-    image: '/assets/img/graphics/dare-to-dream-competitive-program-summer-2026.png',
+    image: '/assets/graphics/dare-to-dream-competitive-program-summer-2026.png',
     label: 'Dare to Dream Sporting Academy — 2026 Summer Term Competitive Program schedule graphic',
   },
   {
@@ -46,7 +46,7 @@ export const DESIGN_PROJECTS = [
     brief: "Introduce the Computing Subcommittee's 2025/2026 executive team with a graphic that felt current and on-brand for the department.",
     process: 'Established a shared circuit-board motif and neon accent system so every exec profile card stays consistent across the rollout.',
     nameBehind: 'PUBLICATIONS',
-    image: '/assets/img/graphics/uwi-computing-meet-the-exec-sydonae-england.png',
+    image: '/assets/graphics/uwi-computing-meet-the-exec-sydonae-england.png',
     label: 'UWI Computing Subcommittee — Meet the Exec 2025/2026 graphic featuring Sydonae England, Publications Chairperson',
   },
   {
@@ -70,7 +70,7 @@ export const DESIGN_PROJECTS = [
     tools: 'Illustrator, Canva',
     brief: 'Turn a plain exam timetable into something students would actually screenshot and keep — clear at a glance, still on-brand.',
     process: 'Built a reusable table template with course-code-first hierarchy, so future exam seasons just need updated dates and venues.',
-    image: '/assets/img/graphics/uwi-computing-midsemester-exam-schedule.png',
+    image: '/assets/graphics/uwi-computing-midsemester-exam-schedule.png',
     label: 'UWI Computing Subcommittee — Midsemester Exam Schedule graphic',
   },
 ];

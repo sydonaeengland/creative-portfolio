@@ -118,19 +118,19 @@ export default function Home() {
         </Reveal>
         <Reveal className="featured-row">
           <div className="featured-card">
-            <img src="/assets/img/graphics/dare-to-dream-kick4urheart-under10-champions.png" alt="Dare to Dream Sporting Academy — Kick4UrHeart Under-10 Champions graphic" />
+            <img src="/assets/graphics/dare-to-dream-kick4urheart-under10-champions.png" alt="Dare to Dream Sporting Academy — Kick4UrHeart Under-10 Champions graphic" />
             <span className="cap">CHAMPIONS — DARE TO DREAM</span>
           </div>
           <div className="featured-card">
-            <img src="/assets/img/graphics/peridot-law-year-of-excellence.png" alt="Peridot Law — A Year of Excellence graphic" />
+            <img src="/assets/graphics/peridot-law-year-of-excellence.png" alt="Peridot Law — A Year of Excellence graphic" />
             <span className="cap">A YEAR OF EXCELLENCE — PERIDOT LAW</span>
           </div>
           <div className="featured-card">
-            <img src="/assets/img/graphics/dreamscape-villa-local-gems.png" alt="Dreamscape Villa — Local Gems graphic" />
+            <img src="/assets/graphics/dreamscape-villa-local-gems.png" alt="Dreamscape Villa — Local Gems graphic" />
             <span className="cap">LOCAL GEMS — DREAMSCAPE VILLA</span>
           </div>
           <div className="featured-card">
-            <img src="/assets/img/graphics/ichs-spirit-week-valentines-2023.png" alt="Immaculate Conception High School — Spirit Week Valentine's graphic" />
+            <img src="/assets/graphics/ichs-spirit-week-valentines-2023.png" alt="Immaculate Conception High School — Spirit Week Valentine's graphic" />
             <span className="cap">SPIRIT WEEK — ICHS</span>
           </div>
         </Reveal>
