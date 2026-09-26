@@ -1,0 +1,100 @@
+/* ==========================================================================
+   Photography page — calm, cinematic, generous white space.
+   ========================================================================== */
+
+.photo-intro{
+  padding: 160px var(--gutter) 100px;
+  text-align: center;
+}
+.photo-intro .eyebrow{ margin-bottom: 20px; }
+.photo-intro .display{
+  font-size: clamp(30px, 6.6vw, 76px);
+  max-width: 18ch;
+  margin: 0 auto;
+  color: var(--ink);
+}
+
+.photo-block{
+  margin-bottom: 140px;
+}
+.photo-caption{
+  display: flex;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 14px auto 0;
+  padding: 0 var(--gutter);
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+
+/* full width */
+.photo-full{
+  width: 100%;
+}
+.photo-full .ph{ width: 100%; aspect-ratio: 16/8; }
+
+/* pairing */
+.photo-pair{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.photo-pair .ph{ aspect-ratio: 4/5; }
+.photo-pair .ph.short{ aspect-ratio: 4/3; align-self: end; }
+
+/* contact sheet */
+.contact-sheet{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+.contact-sheet .ph{ aspect-ratio: 1/1; position: relative; }
+.contact-sheet .ph::after{
+  content: attr(data-frame);
+  position: absolute;
+  bottom: 6px; left: 8px;
+  font-size: 9px;
+  color: rgba(107,33,232,0.55);
+}
+
+/* large portrait */
+.photo-portrait{
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.photo-portrait .ph{ aspect-ratio: 3/4; }
+
+/* detail trio */
+.detail-trio{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 20px;
+  align-items: end;
+}
+.detail-trio .ph:nth-child(1){ aspect-ratio: 4/5; }
+.detail-trio .ph:nth-child(2){ aspect-ratio: 1/1; }
+.detail-trio .ph:nth-child(3){ aspect-ratio: 3/4; }
+
+.annotation-float{
+  position: relative;
+  max-width: 1400px;
+  margin: -30px auto 0;
+  padding: 0 var(--gutter);
+}
+.annotation-float .annotation{ display: inline-block; }
+
+@media (max-width: 760px){
+  .photo-pair, .detail-trio{ grid-template-columns: 1fr; }
+  .contact-sheet{ grid-template-columns: repeat(2, 1fr); }
+}
