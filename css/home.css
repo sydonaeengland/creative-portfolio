@@ -151,13 +151,23 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px 28px;
-  margin-top: 56px;
+  align-items: center;
+  gap: 14px 22px;
+  margin: 88px 0 8px;
 }
 .discipline-strip span{
   font-family: var(--font-display);
   font-size: clamp(20px, 3.6vw, 34px);
   color: var(--purple-soft);
+}
+.discipline-strip span + span::before{
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--hairline);
+  margin-right: 22px;
+  vertical-align: middle;
 }
 
 @media (max-width: 700px){
