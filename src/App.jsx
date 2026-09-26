@@ -13,30 +13,21 @@ import Contact from './pages/Contact.jsx';
 
 const PURPLE_PAGES = new Set(['/', '/contact']);
 
-function useFirstVisitLoader() {
-  const [phase, setPhase] = useState(() => {
-    try {
-      return sessionStorage.getItem('archiveVisited') ? 'done' : 'in';
-    } catch {
-      return 'done';
-    }
-  });
+function useLoader() {
+  // Plays on every full page load/reload (not just first visit) — no
+  // sessionStorage gate. Client-side route navigation within the app
+  // does NOT remount App, so it still won't replay on every Link click.
+  const [phase, setPhase] = useState('in');
 
   // Runs once on mount only — NOT on every `phase` change. The timers below
   // already advance phase in sequence; re-running this effect per phase
   // change (via a [phase] dependency) stacked duplicate timer chains and
   // made the loader appear to loop/re-trigger.
   useEffect(() => {
-    if (phase === 'done') return undefined;
-    try { sessionStorage.setItem('archiveVisited', '1'); } catch {}
-
-    // One beat cycle (photo/design/social/video) is 4 x 480ms = 1920ms;
-    // let it play through fully once plus a bit before converging.
     const toConverge = setTimeout(() => setPhase('converge'), 2150);
     const toOut = setTimeout(() => setPhase('out'), 2750);
     const toDone = setTimeout(() => setPhase('done'), 3350);
     return () => { clearTimeout(toConverge); clearTimeout(toOut); clearTimeout(toDone); };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return phase;
@@ -45,7 +36,7 @@ function useFirstVisitLoader() {
 export default function App() {
   const location = useLocation();
   const isPurplePage = PURPLE_PAGES.has(location.pathname);
-  const loaderPhase = useFirstVisitLoader();
+  const loaderPhase = useLoader();
 
   useEffect(() => {
     window.scrollTo(0, 0);

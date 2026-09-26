@@ -343,9 +343,8 @@ h1,h2,h3,h4,p{ margin: 0; }
 .on-purple .micro-footer{ color: rgba(255,255,255,0.55); }
 
 /* -------------------------------------------------------------------------
-   Loading screen — first-visit only. Tool icons (design/photo/video/social)
-   sweep in with spring overshoot, then converge into the wordmark before
-   the screen wipes away to reveal the real page underneath.
+   Loading screen — colorful tool objects float in and drift around the
+   wordmark, then converge/dissolve before the real page reveals.
    ------------------------------------------------------------------------- */
 .loading-screen{
   position: fixed;
@@ -374,40 +373,19 @@ h1,h2,h3,h4,p{ margin: 0; }
   border: 1px solid rgba(255,255,255,0.08);
 }
 
-.loading-scene{
-  position: relative;
-  width: min(260px, 60vw);
-  height: 200px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-.loading-scene-figure{
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.loading-scene-prop{
+.loading-float-field{
   position: absolute;
-  top: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 72px;
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  inset: 0;
+  pointer-events: none;
 }
-.loading-scene-label{
+.loading-float{
   position: absolute;
-  bottom: -34px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  color: rgba(255,255,255,0.7);
-  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.35));
+}
+
+@media (max-width: 560px){
+  .loading-float{ transform: translate(-50%, -50%) scale(0.65); }
 }
 
 .loading-mark{
