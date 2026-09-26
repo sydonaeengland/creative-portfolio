@@ -22,15 +22,20 @@ function useFirstVisitLoader() {
     }
   });
 
+  // Runs once on mount only — NOT on every `phase` change. The timers below
+  // already advance phase in sequence; re-running this effect per phase
+  // change (via a [phase] dependency) stacked duplicate timer chains and
+  // made the loader appear to loop/re-trigger.
   useEffect(() => {
-    if (phase === 'done') return;
+    if (phase === 'done') return undefined;
     try { sessionStorage.setItem('archiveVisited', '1'); } catch {}
 
     const toConverge = setTimeout(() => setPhase('converge'), 1450);
     const toOut = setTimeout(() => setPhase('out'), 2050);
     const toDone = setTimeout(() => setPhase('done'), 2650);
     return () => { clearTimeout(toConverge); clearTimeout(toOut); clearTimeout(toDone); };
-  }, [phase]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return phase;
 }
