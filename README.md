@@ -42,9 +42,6 @@ public/assets/           — real media (served as-is, referenced by URL)
   img/graphics/             — real graphic design work
   img/photography/           — real photography (swap placeholders in here)
   video/graphics/, video/photography/  — same split for video
-
-legacy-html/              — the original static HTML/CSS/JS version, kept for
-                             reference. Not part of the live build.
 ```
 
 ## Swapping in real media
