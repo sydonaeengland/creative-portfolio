@@ -54,6 +54,7 @@
   overflow: hidden;
 }
 .clip .ph{ width: 100%; height: 100%; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); border: none; }
+.clip img{ width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(1.05); }
 .clip-1{ width: 15vw; min-width: 130px; height: 20vh; min-height: 150px; top: 12%; left: 20%; transform: rotate(-6deg); }
 .clip-2{ width: 12vw; min-width: 110px; height: 16vh; min-height: 130px; top: 58%; left: 24%; transform: rotate(4deg); }
 .clip-3{ width: 16vw; min-width: 140px; height: 22vh; min-height: 160px; top: 14%; right: 19%; transform: rotate(5deg); }
@@ -162,4 +163,77 @@
   .clip-2{ width: 22vw; height: 12vh; }
   .clip-3{ width: 26vw; height: 14vh; }
   .clip-4{ width: 20vw; height: 12vh; }
+}
+
+/* ---------------------------------------------------------------------
+   Featured work strip — a taste of real work before the deep dive
+   --------------------------------------------------------------------- */
+.featured-strip{
+  padding: 100px var(--gutter) 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.featured-strip-head{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.featured-strip-head h3{
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4.4vw, 40px);
+  color: var(--ink);
+  text-transform: uppercase;
+}
+.featured-strip-head a{
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--purple);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.featured-strip-head a .arrow{ transition: transform .25s var(--ease-out); }
+.featured-strip-head a:hover .arrow{ transform: translateX(6px); }
+
+.featured-row{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.featured-card{
+  position: relative;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  background: var(--purple-tint);
+}
+.featured-card img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s var(--ease-out);
+}
+.featured-card:hover img{ transform: scale(1.05); }
+.featured-card .cap{
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 14px 16px;
+  background: linear-gradient(0deg, rgba(10,2,28,0.75), transparent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .25s var(--ease-out), transform .25s var(--ease-out);
+}
+.featured-card:hover .cap{ opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px){
+  .featured-row{ grid-template-columns: repeat(2, 1fr); }
 }
