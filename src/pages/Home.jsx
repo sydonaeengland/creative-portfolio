@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import PageFade from '../components/PageFade.jsx';
 import Reveal from '../components/Reveal.jsx';
-import Placeholder from '../components/Placeholder.jsx';
 import '../styles/home.css';
 
 // The loading screen covers the page for ~2.7s (see useLoader in App.jsx)
@@ -27,8 +26,8 @@ const LINE_VARIANTS = {
 export default function Home() {
   const heroRef = useRef(null);
 
-  const clipX = useSpring(useMotionValue(0), { stiffness: 120, damping: 20 });
-  const clipY = useSpring(useMotionValue(0), { stiffness: 120, damping: 20 });
+  // Subtle parallax on the headline only — the one motion detail in an
+  // otherwise clean hero. No imagery/clippings behind it.
   const headX = useSpring(useMotionValue(0), { stiffness: 140, damping: 22 });
   const headY = useSpring(useMotionValue(0), { stiffness: 140, damping: 22 });
 
@@ -41,13 +40,11 @@ export default function Home() {
       const rect = hero.getBoundingClientRect();
       const relX = (e.clientX - rect.left) / rect.width - 0.5;
       const relY = (e.clientY - rect.top) / rect.height - 0.5;
-      clipX.set(relX * -14);
-      clipY.set(relY * -10);
       headX.set(relX * 8);
       headY.set(relY * 6);
     }
     function handleLeave() {
-      clipX.set(0); clipY.set(0); headX.set(0); headY.set(0);
+      headX.set(0); headY.set(0);
     }
     hero.addEventListener('mousemove', handleMove);
     hero.addEventListener('mouseleave', handleLeave);
@@ -55,7 +52,7 @@ export default function Home() {
       hero.removeEventListener('mousemove', handleMove);
       hero.removeEventListener('mouseleave', handleLeave);
     };
-  }, [clipX, clipY, headX, headY]);
+  }, [headX, headY]);
 
   return (
     <PageFade>
@@ -67,36 +64,11 @@ export default function Home() {
         </div>
 
         <div className="hero-mid">
-          <motion.div className="hero-clippings" style={{ x: clipX, y: clipY }}>
-            <div className="clip clip-1">
-              <Placeholder
-                label="PHOTO"
-                src="/assets/img/graphics/dare-to-dream-dreams-cup-2026-full-time-result.png"
-                alt="Dare to Dream Sporting Academy — Dreams Cup 2026 full-time result graphic"
-              />
-            </div>
-            <div className="clip clip-2">
-              <Placeholder
-                label="DESIGN"
-                src="/assets/img/graphics/uwi-computing-meet-the-exec-sydonae-england.png"
-                alt="UWI Computing Subcommittee — Meet the Exec graphic"
-              />
-            </div>
-            <div className="clip clip-3">
-              <Placeholder
-                label="FRAME"
-                src="/assets/img/graphics/dreamscape-villa-listing-overview.png"
-                alt="Dreamscape Villa listing overview graphic"
-              />
-            </div>
-            <div className="clip clip-4">
-              <Placeholder
-                label="PHOTO"
-                src="/assets/img/graphics/ichs-international-girls-day-2022.png"
-                alt="Immaculate Conception High School — International Girls Day photo collage"
-              />
-            </div>
-          </motion.div>
+          <motion.div
+            className="hero-accent"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: HEADLINE_START_DELAY - 0.3 } }}
+          />
           <motion.h1 className="hero-headline display" style={{ x: headX, y: headY }}>
             <motion.span className="line" custom={0} variants={LINE_VARIANTS} initial="hidden" animate="visible">
               I MAKE
