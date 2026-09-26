@@ -344,8 +344,8 @@ h1,h2,h3,h4,p{ margin: 0; }
 
 /* -------------------------------------------------------------------------
    Loading screen — first-visit only. Tool icons (design/photo/video/social)
-   draw in, then converge into the SYD° mark before fading to reveal the
-   real page underneath.
+   sweep in with spring overshoot, then converge into the wordmark before
+   the screen wipes away to reveal the real page underneath.
    ------------------------------------------------------------------------- */
 .loading-screen{
   position: fixed;
@@ -355,6 +355,23 @@ h1,h2,h3,h4,p{ margin: 0; }
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+.loading-backdrop-ring{
+  position: absolute;
+  width: min(70vw, 620px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.14);
+  pointer-events: none;
+}
+.loading-backdrop-ring::before{
+  content: '';
+  position: absolute;
+  inset: 14%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .loading-icons{
@@ -363,12 +380,22 @@ h1,h2,h3,h4,p{ margin: 0; }
   gap: clamp(20px, 6vw, 56px);
 }
 .loading-icon{
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
 }
-.loading-icon svg{ color: #fff; }
+.loading-icon-ring{
+  position: absolute;
+  top: -14px; left: 50%;
+  transform: translateX(-50%);
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.08), transparent 70%);
+}
+.loading-icon svg{ position: relative; color: #fff; margin-top: 4px; }
 .loading-icon span{
   font-size: 10px;
   font-weight: 700;
@@ -378,12 +405,37 @@ h1,h2,h3,h4,p{ margin: 0; }
 
 .loading-mark{
   position: absolute;
-  font-size: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.loading-mark-line{
+  font-size: clamp(26px, 6vw, 48px);
   color: #fff;
+  line-height: 1;
+}
+
+.loading-progress-track{
+  position: absolute;
+  bottom: clamp(32px, 8vh, 64px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(200px, 40vw);
+  height: 2px;
+  background: rgba(255,255,255,0.18);
+  overflow: hidden;
+}
+.loading-progress-fill{
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform-origin: left center;
 }
 
 @media (max-width: 480px){
   .loading-icons{ gap: 20px; }
-  .loading-icon svg{ width: 26px; height: 26px; }
+  .loading-icon svg{ width: 24px; height: 24px; }
   .loading-icon span{ font-size: 8px; }
+  .loading-icon-ring{ width: 48px; height: 48px; }
 }

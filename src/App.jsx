@@ -26,9 +26,9 @@ function useFirstVisitLoader() {
     if (phase === 'done') return;
     try { sessionStorage.setItem('archiveVisited', '1'); } catch {}
 
-    const toConverge = setTimeout(() => setPhase('converge'), 900);
-    const toOut = setTimeout(() => setPhase('out'), 1500);
-    const toDone = setTimeout(() => setPhase('done'), 2000);
+    const toConverge = setTimeout(() => setPhase('converge'), 1450);
+    const toOut = setTimeout(() => setPhase('out'), 2050);
+    const toDone = setTimeout(() => setPhase('done'), 2650);
     return () => { clearTimeout(toConverge); clearTimeout(toOut); clearTimeout(toDone); };
   }, [phase]);
 
