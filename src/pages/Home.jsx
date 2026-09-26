@@ -94,11 +94,18 @@ export default function Home() {
         <Reveal as="h2" className="handoff-headline display">
           ONE CREATIVE.<br />MANY MEDIUMS.
         </Reveal>
+        <Reveal as="p" className="handoff-kicker">
+          Code is the profession. Creativity is the constant.
+        </Reveal>
         <Reveal as="p" className="handoff-copy">
-          I design, I shoot, I edit, I manage the feed after — because most of the
-          time, a single idea needs all four to actually land. I'm not four
-          creatives borrowing one name. I'm one process that knows which medium
-          a story needs, and switches without losing the thread.
+          What started as a love for creating has grown into a journey across
+          design, photography, video and social media. Each medium brings
+          something different to the table, from capturing moments and
+          telling stories to turning ideas into something people can see,
+          feel and connect with. At the heart of it all is the same
+          curiosity, passion and love for the creative process. Different
+          mediums, one creative vision, and endless possibilities for what
+          comes next.
         </Reveal>
 
         <Reveal className="discipline-strip">

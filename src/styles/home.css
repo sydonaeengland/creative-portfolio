@@ -100,12 +100,21 @@
   letter-spacing: 0.01em;
   line-height: 1.05;
 }
+.handoff-kicker{
+  max-width: 40ch;
+  margin: 0 auto 24px;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--ink);
+}
+
 .handoff-copy{
-  max-width: 46ch;
+  max-width: 52ch;
   margin: 0 auto;
   font-size: 17px;
   color: var(--ink-soft);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .handoff-cta{
