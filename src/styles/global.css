@@ -432,15 +432,16 @@ h1,h2,h3,h4,p{ margin: 0; }
   height: 0;
   transform: rotate(var(--angle)) translateX(min(34vw, 130px));
 }
-.loading-fragment-dot{
+.loading-fragment-glyph{
   position: absolute;
-  top: -4px;
-  left: -4px;
-  width: 8px;
-  height: 8px;
-  background: #fff;
-  border-radius: 2px;
+  top: -12px;
+  left: -12px;
+  width: 24px;
+  height: 24px;
   display: block;
+  /* counter-rotate so the glyph itself always reads upright, regardless
+     of the parent's positional angle */
+  transform: rotate(var(--counter-angle));
 }
 
 @media (max-width: 480px){
@@ -460,9 +461,10 @@ h1,h2,h3,h4,p{ margin: 0; }
   gap: 2px;
 }
 .loading-mark-line{
-  font-size: clamp(26px, 6vw, 48px);
+  font-size: clamp(16px, 3.4vw, 26px);
+  letter-spacing: 0.04em;
   color: #fff;
-  line-height: 1;
+  line-height: 1.15;
 }
 
 .loading-progress-track{

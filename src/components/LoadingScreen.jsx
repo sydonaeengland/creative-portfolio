@@ -54,37 +54,67 @@ function BuildBars({ phase }) {
   );
 }
 
-// Orbiting fragments — small squares/dashes that swing around the ring,
-// reinforcing "assembling" without being literal icons.
+/* Small clean line-icon glyphs — the four disciplines — orbiting the
+   ring. Sharp geometric strokes, not illustrated/emoji. */
+function CameraGlyph() {
+  return (
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="7" width="18" height="13" rx="2" />
+      <path d="M8 7l1.6-3h4.8L16 7" />
+      <circle cx="12" cy="13.5" r="4" />
+    </svg>
+  );
+}
+function PenGlyph() {
+  return (
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 20l3.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10L3 19" />
+      <path d="M13.5 6.5l4 4" />
+    </svg>
+  );
+}
+function ChatGlyph() {
+  return (
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 5h16v11H8l-4 4V5z" />
+    </svg>
+  );
+}
+function ClapperGlyph() {
+  return (
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="9" width="18" height="12" rx="2" />
+      <path d="M3 9l1.5-4h4L7 9M10 9l1.5-4h4L14 9" />
+    </svg>
+  );
+}
+
 const FRAGMENTS = [
-  { angle: 0, delay: 0.2 },
-  { angle: 72, delay: 0.32 },
-  { angle: 144, delay: 0.44 },
-  { angle: 216, delay: 0.56 },
-  { angle: 288, delay: 0.68 },
+  { angle: 0, delay: 0.2, Glyph: CameraGlyph },
+  { angle: 90, delay: 0.36, Glyph: PenGlyph },
+  { angle: 180, delay: 0.52, Glyph: ChatGlyph },
+  { angle: 270, delay: 0.68, Glyph: ClapperGlyph },
 ];
 
 function OrbitFragments({ phase }) {
   const converge = phase === 'converge' || phase === 'out';
   return (
     <div className="loading-orbit">
-      {FRAGMENTS.map((f, i) => (
+      {FRAGMENTS.map(({ angle, delay, Glyph }, i) => (
         <motion.span
           key={i}
           className="loading-fragment"
-          style={{ '--angle': `${f.angle}deg` }}
+          style={{ '--angle': `${angle}deg` }}
           initial={{ opacity: 0, scale: 0 }}
           animate={
             converge
               ? { opacity: 0, scale: 0, transition: { duration: 0.3, ease: EASE_SHARP, delay: i * 0.02 } }
-              : { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 260, damping: 18, delay: f.delay } }
+              : { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 260, damping: 18, delay } }
           }
         >
-          <motion.span
-            className="loading-fragment-dot"
-            animate={converge ? {} : { rotate: 360 }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
-          />
+          <span className="loading-fragment-glyph" style={{ '--counter-angle': `${-angle}deg` }}>
+            <Glyph />
+          </span>
         </motion.span>
       ))}
     </div>

@@ -6,6 +6,13 @@ import Reveal from '../components/Reveal.jsx';
 import Placeholder from '../components/Placeholder.jsx';
 import '../styles/home.css';
 
+// The loading screen covers the page for ~2.7s (see useLoader in App.jsx)
+// before it starts wiping away — this headline's entrance was firing at
+// t=0 on mount, underneath the still-opaque loader, so by the time the
+// loader cleared, the animation had already finished and the text just
+// appeared static. Delay entrance to start as the loader begins revealing.
+const HEADLINE_START_DELAY = 2.4;
+
 const LINE_VARIANTS = {
   hidden: { opacity: 0, y: '0.55em', scale: 1.08, filter: 'blur(6px)' },
   visible: (i) => ({
@@ -13,7 +20,7 @@ const LINE_VARIANTS = {
     y: 0,
     scale: 1,
     filter: 'blur(0px)',
-    transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.05 + i * 0.17 },
+    transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: HEADLINE_START_DELAY + i * 0.17 },
   }),
 };
 
