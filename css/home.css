@@ -3,15 +3,14 @@
    ========================================================================== */
 
 .hero{
-  position: relative;
   min-height: 100vh;
-  background: var(--purple);
   color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
 }
+.hero-top, .hero-mid, .hero-bottom{ position: relative; z-index: 1; }
 
 .hero-top{
   display: flex;
@@ -43,8 +42,17 @@
   letter-spacing: 0.01em;
   line-height: 1.02;
 }
-.hero-headline .line{ display: block; }
-.hero-headline .line + .line{ margin-top: 0.06em; }
+.hero-headline .line{
+  display: block;
+  opacity: 0;
+  transform: translateY(0.4em);
+  animation: line-in .9s var(--ease-out) forwards;
+}
+.hero-headline .line + .line{ margin-top: 0.06em; animation-delay: .14s; }
+
+@keyframes line-in{
+  to{ opacity: 1; transform: translateY(0); }
+}
 
 /* layered imagery "clippings" woven behind the headline */
 .hero-clippings{
@@ -61,10 +69,10 @@
   transition: transform .1s linear;
 }
 .clip .ph{ width: 100%; height: 100%; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); border: none; }
-.clip-1{ width: 15vw; min-width: 130px; height: 20vh; min-height: 150px; top: 10%; left: 8%; transform: rotate(-6deg); }
-.clip-2{ width: 12vw; min-width: 110px; height: 16vh; min-height: 130px; top: 60%; left: 14%; transform: rotate(4deg); }
-.clip-3{ width: 16vw; min-width: 140px; height: 22vh; min-height: 160px; top: 14%; right: 9%; transform: rotate(5deg); }
-.clip-4{ width: 11vw; min-width: 100px; height: 15vh; min-height: 120px; top: 64%; right: 12%; transform: rotate(-4deg); }
+.clip-1{ width: 15vw; min-width: 130px; height: 20vh; min-height: 150px; top: 12%; left: 20%; transform: rotate(-6deg); }
+.clip-2{ width: 12vw; min-width: 110px; height: 16vh; min-height: 130px; top: 58%; left: 24%; transform: rotate(4deg); }
+.clip-3{ width: 16vw; min-width: 140px; height: 22vh; min-height: 160px; top: 14%; right: 19%; transform: rotate(5deg); }
+.clip-4{ width: 11vw; min-width: 100px; height: 15vh; min-height: 120px; top: 62%; right: 22%; transform: rotate(-4deg); }
 
 .hero-bottom{
   position: relative;

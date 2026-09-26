@@ -4,7 +4,7 @@
 
 .page-intro{
   min-height: 62vh;
-  background: var(--purple);
+  overflow: hidden;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -13,6 +13,7 @@
   text-align: center;
   padding: 100px var(--gutter) 60px;
 }
+.page-intro > *{ position: relative; z-index: 1; }
 .page-intro .num-huge{
   font-size: clamp(60px, 16vw, 220px);
   color: #fff;

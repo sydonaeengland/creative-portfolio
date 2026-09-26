@@ -4,7 +4,7 @@
 
 .contact-hero{
   min-height: 100vh;
-  background: var(--purple);
+  overflow: hidden;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -13,6 +13,7 @@
   text-align: center;
   padding: 140px var(--gutter) 80px;
 }
+.contact-hero > *{ position: relative; z-index: 1; }
 .contact-hero .kicker{
   font-size: 12px;
   font-weight: 700;
