@@ -8,42 +8,6 @@
   "use strict";
 
   /* ---------------------------------------------------------------------
-     Custom cursor
-     --------------------------------------------------------------------- */
-  function initCursor(){
-    if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
-
-    var dot = document.createElement('div');
-    dot.className = 'cursor-dot';
-    var label = document.createElement('div');
-    label.className = 'cursor-label';
-    document.body.appendChild(dot);
-    document.body.appendChild(label);
-
-    var x = 0, y = 0;
-    window.addEventListener('mousemove', function(e){
-      x = e.clientX; y = e.clientY;
-      dot.style.transform = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)';
-      label.style.transform = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)';
-    }, { passive: true });
-
-    document.addEventListener('mouseover', function(e){
-      var target = e.target.closest('[data-cursor]');
-      if (!target){
-        document.body.classList.remove('cursor-active');
-        return;
-      }
-      label.textContent = target.getAttribute('data-cursor');
-      document.body.classList.add('cursor-active');
-    });
-    document.addEventListener('mouseout', function(e){
-      if (e.target.closest('[data-cursor]')) {
-        document.body.classList.remove('cursor-active');
-      }
-    });
-  }
-
-  /* ---------------------------------------------------------------------
      Mobile menu
      --------------------------------------------------------------------- */
   function initMobileMenu(){
@@ -204,7 +168,6 @@
      --------------------------------------------------------------------- */
 
   document.addEventListener('DOMContentLoaded', function(){
-    initCursor();
     initMobileMenu();
     initTransitions();
     initReveal();
