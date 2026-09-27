@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  base: '/creative-portfolio/',
   plugins: [react()],
   server: {
     // Don't watch public/assets — it's static media dropped in from the
