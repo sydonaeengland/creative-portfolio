@@ -109,6 +109,15 @@ export default function JustifiedGallery({ items, targetHeight = 240, gap = 14, 
 
   return (
     <div className="justified-gallery" ref={containerRef}>
+      {!ready && (
+        <div className="gallery-loading" role="status" aria-live="polite">
+          <svg className="gallery-loading-icon" viewBox="0 0 24 24" width="34" height="34" aria-hidden="true">
+            <path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+            <circle cx="12" cy="14" r="3.4" fill="none" stroke="currentColor" strokeWidth="1.6" />
+          </svg>
+          <span>Developing the roll…</span>
+        </div>
+      )}
       {ready && rows.map((row, ri) => (
         <div className="justified-row" key={ri} style={{ gap }}>
           {row.map((item, ci) => (

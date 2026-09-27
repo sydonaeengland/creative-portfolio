@@ -105,6 +105,15 @@ export default function VideoJustifiedGallery({ items, targetHeight = 260, gap =
 
   return (
     <div className="video-justified-gallery" ref={containerRef}>
+      {!ready && (
+        <div className="gallery-loading" role="status" aria-live="polite">
+          <svg className="gallery-loading-icon" viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+            <path d="M3 9.5 4.6 5h2.6L5.6 9.5H3zm5 0L9.6 5h2.6L10.6 9.5H8zm5 0L14.6 5h2.6L15.6 9.5H13zm5 0L19.6 5H21v4.5h-3z" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+            <rect x="3" y="9.5" width="18" height="9.5" rx="1.2" fill="none" stroke="currentColor" strokeWidth="1.6" />
+          </svg>
+          <span>Cutting the reel…</span>
+        </div>
+      )}
       {ready && rows.map((row, ri) => (
         <div className="video-justified-row" key={ri} style={{ gap }}>
           {row.map((item) => (
