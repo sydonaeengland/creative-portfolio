@@ -1,61 +1,87 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
-// Loading screen — one confident move: the wordmark reveals via a tight
-// clip-path wipe, each line in sequence, with a single thin underline
-// as the only secondary accent. Clean gradient background, nothing else
-// competing for attention. Plays on every full page load — see
-// useLoader() in App.jsx.
+// Loading screen — calm but alive: letters settle in one by one, a rule
+// draws itself, and the disciplines cycle underneath instead of sitting
+// static. Still no rapid clip-path wipes or scaling/strobe-risk motion —
+// everything here is a gentle translate/opacity, and prefers-reduced-motion
+// (global.css) removes it entirely.
+const EASE = [0.16, 1, 0.3, 1];
 
-const EASE_SHARP = [0.83, 0, 0.17, 1];
-const EASE_OUT = [0.16, 1, 0.3, 1];
+const WORDS = ['SYDONAE', 'ENGLAND'];
+const DISCIPLINES = ['DESIGN', 'PHOTOGRAPHY', 'VIDEO', 'SOCIAL MEDIA'];
 
-const LINE_VARIANTS = {
-  hidden: { clipPath: 'inset(0 100% 0 0)' },
-  visible: (i) => ({
-    clipPath: 'inset(0 0% 0 0)',
-    transition: { duration: 0.7, ease: EASE_SHARP, delay: 0.15 + i * 0.22 },
-  }),
-};
+function AnimatedWord({ word, delayStart }) {
+  return (
+    <span className="loading-mark-line display" aria-label={word}>
+      {word.split('').map((ch, i) => (
+        <motion.span
+          key={i}
+          className="loading-letter"
+          initial={{ opacity: 0, y: '0.6em' }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.55,
+            ease: EASE,
+            delay: delayStart + i * 0.035,
+          }}
+        >
+          {ch}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
 
 export default function LoadingScreen({ phase }) {
-  // phase: 'in' (wordmark wipes in) | 'converge' (hold) | 'out' (wipe away)
+  // phase: 'in' (wordmark fades in) | 'converge' (hold) | 'out' (fades away)
   const leaving = phase === 'out';
+  const [wordIndex, setWordIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setWordIndex((i) => (i + 1) % DISCIPLINES.length);
+    }, 1100);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <motion.div
       className="loading-screen purple-field"
-      initial={{ opacity: 1 }}
-      animate={leaving ? { opacity: 0, transition: { duration: 0.55, ease: EASE_OUT } } : { opacity: 1 }}
+      initial={{ opacity: 0 }}
+      animate={leaving ? { opacity: 0 } : { opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.6, ease: EASE }}
     >
+      <div className="loading-orb" aria-hidden="true" />
+
       <div className="loading-mark">
-        <div className="loading-mark-line-wrap">
-          <motion.span
-            className="loading-mark-line display"
-            custom={0}
-            variants={LINE_VARIANTS}
-            initial="hidden"
-            animate="visible"
-          >
-            SYDONAE
-          </motion.span>
-        </div>
-        <div className="loading-mark-line-wrap">
-          <motion.span
-            className="loading-mark-line display"
-            custom={1}
-            variants={LINE_VARIANTS}
-            initial="hidden"
-            animate="visible"
-          >
-            ENGLAND
-          </motion.span>
-        </div>
+        <AnimatedWord word={WORDS[0]} delayStart={0.1} />
+        <AnimatedWord word={WORDS[1]} delayStart={0.35} />
 
         <motion.div
           className="loading-mark-rule"
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1, transition: { duration: 0.5, ease: EASE_SHARP, delay: 0.75 } }}
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ duration: 0.7, ease: EASE, delay: 0.7 }}
         />
+
+        <div className="loading-mark-tagline">
+          <span className="loading-mark-tagline-prefix">What I do —</span>
+          <span className="loading-mark-tagline-cycle">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={DISCIPLINES[wordIndex]}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4, ease: EASE }}
+              >
+                {DISCIPLINES[wordIndex]}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+        </div>
       </div>
     </motion.div>
   );

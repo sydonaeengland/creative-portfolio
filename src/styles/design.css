@@ -1,140 +1,446 @@
 /* ==========================================================================
-   Design page
+   Design page — simple image gallery
    ========================================================================== */
 
-.page-intro{
-  min-height: 62vh;
+/* Design page banner — mirrors Home's Hero structure: a left text column
+   (big title, tagline, category tags) beside a real photo collage on the
+   right, rather than plain centered text on a flat gradient. */
+.design-hero{
+  position: relative;
+  min-height: 46vh;
+  max-height: 560px;
   overflow: hidden;
+  box-sizing: border-box;
   color: #fff;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-wrap: nowrap;
   align-items: center;
-  text-align: center;
-  padding: 100px var(--gutter) 60px;
+  justify-content: space-between;
+  padding: 110px var(--gutter) 60px;
+  gap: 32px;
+  background-image: url('/assets/graphics/dare-to-dream-kick4urheart-under10-champions.png');
+  background-size: cover;
+  background-position: center 30%;
 }
-.page-intro .num-huge{ font-size: clamp(60px, 16vw, 220px); color: #fff; }
-.page-intro p{ margin-top: 18px; max-width: 40ch; color: rgba(255,255,255,0.8); }
-
-.poster-wall{
-  position: relative;
-  max-width: 1400px;
-  margin: 100px auto;
-  padding: 0 var(--gutter);
-}
-
-.poster-grid{
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 24px;
-  position: relative;
-}
-
-.poster-card{
-  position: relative;
-  cursor: pointer;
-  transition: transform .35s var(--ease-out);
-}
-.poster-card:hover{ transform: translateY(-6px); }
-.poster-card .frame{ position: relative; overflow: hidden; border: 1px solid var(--hairline); z-index: 1; }
-.poster-card .ph,
-.poster-card .frame img{ width: 100%; height: 100%; transition: transform .5s var(--ease-out); }
-.poster-card .frame img{ object-fit: cover; display: block; }
-.poster-card:hover .ph,
-.poster-card:hover .frame img{ transform: scale(1.04); }
-
-.poster-card .name-behind{
+.design-hero::after{
+  content: '';
   position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 55%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgba(254,253,251,0.4) 55%, var(--white) 100%);
+}
+
+/* Purple gradient overlay — sits above the background photo, below the
+   text/collage content, so the banner reads as tinted photography rather
+   than a flat color field or a plain unfiltered image. */
+.design-hero-gradient{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(120% 90% at 18% 8%, rgba(255,255,255,0.08), transparent 55%),
+    radial-gradient(100% 80% at 88% 100%, rgba(6,1,16,0.92), transparent 62%),
+    linear-gradient(160deg, rgba(74,15,184,0.96) 0%, rgba(44,10,118,0.97) 55%, rgba(20,5,58,0.98) 100%);
+}
+
+/* Subtle noise texture over the purple field, same technique as Home's
+   Hero, so the banner doesn't read as one flat gradient. */
+.design-hero-noise{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/* Thin curved graphic-mark lines, same motif as Home's Hero, giving the
+   empty field some depth instead of just the flat purple gradient. */
+.design-hero-lines{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.design-hero-line{
+  stroke: rgba(220, 190, 255, 0.28);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+.design-hero-line-2{ stroke: rgba(220, 190, 255, 0.16); }
+
+.design-hero-watermark{
+  position: absolute;
+  left: -2%;
+  bottom: -0.15em;
   z-index: 0;
   font-family: var(--font-display);
-  color: var(--purple-tint);
-  line-height: 0.85;
+  font-size: clamp(160px, 22vw, 320px);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.06);
   pointer-events: none;
   user-select: none;
 }
 
-.poster-card .meta{
-  margin-top: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font-size: 12px;
+.design-hero-panel{
+  position: relative;
+  z-index: 2;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 480px;
 }
-.poster-card .meta .title{ font-weight: 700; letter-spacing: 0.02em; }
-.poster-card .meta .year{ color: var(--ink-soft); }
+.design-hero-title{
+  font-size: clamp(40px, 5.6vw, 84px);
+  line-height: 0.92;
+  color: #fff;
+  text-shadow: 0 10px 34px rgba(8, 2, 22, 0.4);
+}
+.design-hero-copy{
+  margin-top: 14px;
+  max-width: 42ch;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.55;
+}
+.design-hero-tags{
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+}
+.design-hero-tags li{
+  font-family: var(--font-display);
+  font-size: clamp(12px, 1.1vw, 14px);
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+}
 
-.poster-card.p1{ grid-column: 1 / 8; }
-.poster-card.p1 .frame{ aspect-ratio: 16/10; }
-.poster-card.p1 .name-behind{ font-size: clamp(60px,9vw,150px); top: -40px; left: -10px; }
+/* -- right: a small collage of real design work, not one faint blurred
+   background image -- */
+.design-hero-collage{
+  position: relative;
+  z-index: 1;
+  flex: 0 1 360px;
+  min-width: 0;
+  height: clamp(220px, 30vh, 280px);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+}
+.design-hero-tile{
+  border-radius: 14px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 20px 50px rgba(8, 2, 22, 0.4);
+}
+.design-hero-tile-1{ grid-row: 1 / 3; }
+.design-hero-tile-2{ grid-column: 2; grid-row: 1; }
+.design-hero-tile-3{ grid-column: 2; grid-row: 2; }
 
-.poster-card.p2{ grid-column: 8 / 13; margin-top: 60px; }
-.poster-card.p2 .frame{ aspect-ratio: 3/4; }
+.design-hero-scrim{
+  position: absolute;
+  inset: -20px;
+  z-index: -1;
+  background: radial-gradient(60% 60% at 70% 50%, rgba(74, 23, 184, 0.35), transparent 70%);
+  pointer-events: none;
+}
 
-.poster-card.p3{ grid-column: 1 / 5; margin-top: 40px; }
-.poster-card.p3 .frame{ aspect-ratio: 1/1; }
-
-.poster-card.p4{ grid-column: 5 / 13; }
-.poster-card.p4 .frame{ aspect-ratio: 21/9; }
-.poster-card.p4 .name-behind{ font-size: clamp(50px,7vw,120px); bottom: -30px; right: -6px; }
-
-.poster-card.p5{ grid-column: 1 / 7; margin-top: 20px; }
-.poster-card.p5 .frame{ aspect-ratio: 4/3; }
-
-.poster-card.p6{ grid-column: 7 / 13; margin-top: 90px; }
-.poster-card.p6 .frame{ aspect-ratio: 5/6; }
+.design-hero-collage-caption{
+  position: absolute;
+  left: 0;
+  bottom: -28px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
 
 @media (max-width: 900px){
-  .poster-card{ grid-column: 1 / 13 !important; margin-top: 0 !important; }
+  .design-hero{
+    align-items: flex-start;
+    text-align: left;
+    padding-top: 120px;
+    min-height: 0;
+    max-height: none;
+  }
+  .design-hero-panel{ max-width: 100%; }
+  .design-hero-collage{ display: none; }
+}
+@media (max-width: 600px){
+  .design-hero{ padding: 110px 20px 40px; }
 }
 
-/* ---- Case study overlay ---- */
-.case-study{
+.poster-wall{
+  position: relative;
+  margin: 60px 0 100px;
+  padding: 0 var(--gutter);
+}
+
+.poster-group + .poster-group{
+  margin-top: 64px;
+}
+.poster-group-title{
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 26px);
+  color: var(--purple);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Shared card chrome: frame, hover lift/tilt, VIEW badge — reused by all
+   three gallery layouts (justified rows, even grid, masonry columns) so
+   each section still feels part of the same design system even though the
+   arrangement differs. */
+.poster-card{
+  cursor: pointer;
+}
+.poster-card .frame{
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--ink-soft-10, rgba(10,10,12,0.06));
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out);
+}
+.poster-card:nth-child(odd):hover .frame{
+  transform: translateY(-8px) rotate(-1deg) scale(1.02);
+  box-shadow: 0 22px 40px rgba(10,2,28,0.24);
+}
+.poster-card:nth-child(even):hover .frame{
+  transform: translateY(-8px) rotate(1deg) scale(1.02);
+  box-shadow: 0 22px 40px rgba(10,2,28,0.24);
+}
+.poster-card .ph,
+.poster-card .frame img{
+  display: block;
+  transition: transform .6s var(--ease-out);
+}
+.poster-card:hover .ph,
+.poster-card:hover .frame img{ transform: scale(1.06); }
+
+.poster-card-hover{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--purple);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .3s var(--ease-out), transform .3s var(--ease-out);
+}
+.poster-card:hover .poster-card-hover{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -- Layout 1: Justified rows (JustifiedGallery.jsx) — every row is
+   scaled by JS to fill the full container width exactly, edge to edge.
+   Widths are set inline per tile (via style.width). A sparse last row is
+   capped at 1.35x growth and the shortfall is spread across tiles via a
+   small object-fit: cover crop, rather than leaving a gap on the right. */
+.justified-gallery{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.justified-row{
+  display: flex;
+}
+.justified-card{
+  flex: none;
+  cursor: pointer;
+}
+.justified-card .frame{
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  background: none;
+  cursor: pointer;
+  transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out);
+}
+.justified-card:nth-child(odd) .frame:hover{
+  transform: translateY(-8px) rotate(-1deg) scale(1.02);
+  box-shadow: 0 22px 40px rgba(10,2,28,0.24);
+}
+.justified-card:nth-child(even) .frame:hover{
+  transform: translateY(-8px) rotate(1deg) scale(1.02);
+  box-shadow: 0 22px 40px rgba(10,2,28,0.24);
+}
+.justified-card .ph,
+.justified-card .frame img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s var(--ease-out);
+}
+.justified-card .frame:hover .ph,
+.justified-card .frame:hover img{ transform: scale(1.06); }
+.justified-card .frame:hover .poster-card-hover{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -- Layout 2: Even grid — identical rectangular tiles, classic gallery. -- */
+.poster-grid--even{
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+}
+.poster-grid--even .frame{ aspect-ratio: 4 / 5; }
+.poster-grid--even .ph,
+.poster-grid--even .frame img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 1200px){
+  .poster-grid--even{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 900px){
+  .poster-grid--even{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 600px){
+  .poster-grid--even{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+}
+
+/* ICHS variant: images are already near-square — fit all of them in a
+   single row (6 columns) instead of wrapping to a second row. */
+.poster-grid--square{ grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.poster-grid--square .frame{ aspect-ratio: 1 / 1; }
+@media (max-width: 900px){
+  .poster-grid--square{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 600px){
+  .poster-grid--square{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Lifestyle & Listings variant: always one row, columns = item count, so
+   nothing wraps to a second line. Scrolls horizontally on narrow screens
+   instead of shrinking tiles past legibility. */
+.poster-grid--one-row{
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+@media (max-width: 900px){
+  .poster-grid--one-row{
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-auto-columns: minmax(140px, 1fr);
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+}
+
+/* ---- Lightbox ---- */
+.lightbox{
   position: fixed;
   inset: 0;
   z-index: 1500;
-  background: var(--white);
-  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px var(--gutter) 40px;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
 }
-
-.case-close{
+.lightbox.is-open{
+  opacity: 1;
+}
+.lightbox-backdrop{
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(10,2,28,0.86);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.lightbox-close{
   position: fixed;
   top: 18px; right: var(--gutter);
   z-index: 10;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  background: var(--white);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
   padding: 8px 14px;
-  border: 1px solid var(--hairline);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 999px;
 }
+.lightbox-nav{
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  line-height: 1;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 999px;
+}
+.lightbox-nav:hover{ background: rgba(255,255,255,0.2); }
+.lightbox-prev{ left: var(--gutter); }
+.lightbox-next{ right: var(--gutter); }
 
-.case-hero{
-  padding: 100px var(--gutter) 40px;
-  border-bottom: 1px solid var(--hairline);
+.lightbox-frame{
+  width: min(1400px, 94vw);
+  height: calc(100vh - 120px);
+  display: flex;
 }
-.case-hero h2{
-  font-family: var(--font-display);
-  font-size: clamp(34px, 8vw, 96px);
-  text-transform: uppercase;
+.lightbox-frame img,
+.lightbox-frame .ph{
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: contain;
+  margin: auto;
 }
-.case-meta{ display: flex; flex-wrap: wrap; gap: 32px; margin-top: 28px; }
-.case-meta div{ font-size: 12px; }
-.case-meta .k{ color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase; font-size: 10px; margin-bottom: 4px; }
-.case-meta .v{ font-weight: 600; }
-
-.case-body{ max-width: 900px; margin: 0 auto; padding: 60px var(--gutter) 120px; }
-.case-block{ margin-bottom: 64px; }
-.case-block h3{
-  font-family: var(--font-display);
-  font-size: clamp(22px, 3.6vw, 34px);
-  color: var(--purple);
-  margin-bottom: 14px;
+.lightbox-meta{
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: #fff;
+  font-size: 13px;
 }
-.case-block p{ color: var(--ink-soft); max-width: 60ch; }
-.case-block .visual-row{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 22px; }
-.case-block .visual-row .ph{ aspect-ratio: 4/3; }
-
-.case-rf{ margin-top: 28px; }
-.case-rf .rf-toggle{ margin-bottom: 14px; }
-.case-rf .rf-stage{ aspect-ratio: 16/10; }
-.case-rf .rf-asset .ph{ width: 100%; height: 100%; }
+.lightbox-meta .title{ font-weight: 700; letter-spacing: 0.02em; }
+.lightbox-meta .year{ color: rgba(255,255,255,0.6); }

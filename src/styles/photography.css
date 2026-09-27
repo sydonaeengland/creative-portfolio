@@ -2,83 +2,471 @@
    Photography page
    ========================================================================== */
 
-.photo-intro{ padding: 160px var(--gutter) 100px; text-align: center; }
-.photo-intro .eyebrow{ margin-bottom: 20px; }
-.photo-intro .display{
-  font-size: clamp(30px, 6.6vw, 76px);
-  max-width: 18ch;
-  margin: 0 auto;
-  color: var(--ink);
+/* Photography banner — same structure as Design's hero: a left text
+   column (title, tagline, tags) beside a real photo collage on the
+   right, tinted purple, fading seamlessly into the white page below. */
+.photo-hero{
+  position: relative;
+  min-height: 46vh;
+  max-height: 560px;
+  overflow: hidden;
+  box-sizing: border-box;
+  color: #fff;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 110px var(--gutter) 60px;
+  gap: 32px;
+  background-image: url('/assets/photography/dare-to-dream-allstar-match-day-14.jpg');
+  background-size: cover;
+  background-position: center 30%;
+}
+.photo-hero-gradient{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(120% 90% at 18% 8%, rgba(255,255,255,0.08), transparent 55%),
+    radial-gradient(100% 80% at 88% 100%, rgba(6,1,16,0.92), transparent 62%),
+    linear-gradient(160deg, rgba(74,15,184,0.96) 0%, rgba(44,10,118,0.97) 55%, rgba(20,5,58,0.98) 100%);
+}
+.photo-hero-noise{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+.photo-hero::after{
+  content: '';
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 55%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgba(254,253,251,0.4) 55%, var(--white) 100%);
 }
 
-.photo-block{ margin-bottom: 140px; }
-.photo-caption{
+.photo-hero-lines{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.photo-hero-line{
+  stroke: rgba(220, 190, 255, 0.28);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+.photo-hero-line-2{ stroke: rgba(220, 190, 255, 0.16); }
+
+.photo-hero-watermark{
+  position: absolute;
+  left: -2%;
+  bottom: -0.15em;
+  z-index: 0;
+  font-family: var(--font-display);
+  font-size: clamp(160px, 22vw, 320px);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+  user-select: none;
+}
+
+.photo-hero-panel{
+  position: relative;
+  z-index: 2;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 480px;
+}
+.photo-hero-title{
+  font-size: clamp(40px, 5.6vw, 84px);
+  line-height: 0.92;
+  color: #fff;
+  text-shadow: 0 10px 34px rgba(8, 2, 22, 0.4);
+}
+.photo-hero-copy{
+  margin-top: 14px;
+  max-width: 42ch;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.55;
+}
+.photo-hero-tags{
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+}
+.photo-hero-tags li{
+  font-family: var(--font-display);
+  font-size: clamp(12px, 1.1vw, 14px);
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+}
+
+.photo-hero-collage{
+  position: relative;
+  z-index: 1;
+  flex: 0 1 360px;
+  min-width: 0;
+  height: clamp(220px, 30vh, 280px);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+}
+.photo-hero-tile{
+  border-radius: 14px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 20px 50px rgba(8, 2, 22, 0.4);
+}
+.photo-hero-tile-1{ grid-row: 1 / 3; }
+.photo-hero-tile-2{ grid-column: 2; grid-row: 1; }
+.photo-hero-tile-3{ grid-column: 2; grid-row: 2; }
+
+.photo-hero-scrim{
+  position: absolute;
+  inset: -20px;
+  z-index: -1;
+  background: radial-gradient(60% 60% at 70% 50%, rgba(74, 23, 184, 0.35), transparent 70%);
+  pointer-events: none;
+}
+
+.photo-hero-collage-caption{
+  position: absolute;
+  left: 0;
+  bottom: -28px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px){
+  .photo-hero{
+    align-items: flex-start;
+    text-align: left;
+    padding-top: 120px;
+    min-height: 0;
+    max-height: none;
+  }
+  .photo-hero-panel{ max-width: 100%; }
+  .photo-hero-collage{ display: none; }
+}
+@media (max-width: 600px){
+  .photo-hero{ padding: 110px 20px 40px; }
+}
+
+/* ---------------------------------------------------------------------
+   Gallery — identical structure/behavior to the Design page's poster
+   wall: grouped by category, each group using either a justified
+   edge-to-edge layout or a uniform grid, shared card chrome, lightbox.
+   --------------------------------------------------------------------- */
+.poster-wall{
+  position: relative;
+  margin: 60px 0 100px;
+  padding: 0 var(--gutter);
+}
+
+.poster-group + .poster-group{
+  margin-top: 64px;
+}
+.poster-group-title{
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 26px);
+  color: var(--purple);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.poster-card{
+  cursor: pointer;
+}
+.poster-card .frame{
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgba(10,10,12,0.06);
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out);
+}
+.poster-card:nth-child(odd):hover .frame{
+  transform: translateY(-8px) rotate(-1deg) scale(1.02);
+  box-shadow: 0 22px 40px rgba(10,2,28,0.24);
+}
+.poster-card:nth-child(even):hover .frame{
+  transform: translateY(-8px) rotate(1deg) scale(1.02);
+  box-shadow: 0 22px 40px rgba(10,2,28,0.24);
+}
+.poster-card .frame img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s var(--ease-out);
+}
+.poster-card:hover .frame img{ transform: scale(1.06); }
+
+.poster-card-hover{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--purple);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .3s var(--ease-out), transform .3s var(--ease-out);
+}
+.poster-card:hover .poster-card-hover{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.poster-grid--even{
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+}
+.poster-grid--even .frame{ aspect-ratio: 4 / 5; }
+@media (max-width: 1200px){
+  .poster-grid--even{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 900px){
+  .poster-grid--even{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 600px){
+  .poster-grid--even{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+}
+
+.justified-gallery{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.justified-row{
+  display: flex;
+}
+.justified-card{
+  flex: none;
+  cursor: pointer;
+}
+.justified-card .frame{
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  background: none;
+  cursor: pointer;
+  transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out);
+}
+.justified-card:nth-child(odd) .frame:hover{
+  transform: translateY(-8px) rotate(-1deg) scale(1.02);
+  box-shadow: 0 22px 40px rgba(10,2,28,0.24);
+}
+.justified-card:nth-child(even) .frame:hover{
+  transform: translateY(-8px) rotate(1deg) scale(1.02);
+  box-shadow: 0 22px 40px rgba(10,2,28,0.24);
+}
+.justified-card .frame img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s var(--ease-out);
+}
+.justified-card .frame:hover img{ transform: scale(1.06); }
+.justified-card .frame:hover .poster-card-hover{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Lightbox ---- */
+.lightbox{
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px var(--gutter) 40px;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+}
+.lightbox.is-open{
+  opacity: 1;
+}
+.lightbox-backdrop{
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(10,2,28,0.86);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.lightbox-close{
+  position: fixed;
+  top: 18px; right: var(--gutter);
+  z-index: 10;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  padding: 8px 14px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 999px;
+}
+.lightbox-nav{
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  line-height: 1;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 999px;
+}
+.lightbox-nav:hover{ background: rgba(255,255,255,0.2); }
+.lightbox-prev{ left: var(--gutter); }
+.lightbox-next{ right: var(--gutter); }
+
+.lightbox-frame{
+  width: min(1400px, 94vw);
+  height: calc(100vh - 120px);
+  display: flex;
+}
+.lightbox-frame img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: contain;
+  margin: auto;
+}
+.lightbox-meta{
+  margin-top: 16px;
   display: flex;
   justify-content: space-between;
-  max-width: 1400px;
-  margin: 14px auto 0;
+  align-items: baseline;
+  color: #fff;
+  font-size: 13px;
+}
+.lightbox-meta .title{ font-weight: 700; letter-spacing: 0.02em; }
+.lightbox-meta .year{ color: rgba(255,255,255,0.6); }
+
+/* ---------------------------------------------------------------------
+   Album covers — one tile per category instead of rendering every photo
+   on the same page. Keeps each page light (fewer simultaneous image
+   loads) and gives the gallery a clear entry point.
+   --------------------------------------------------------------------- */
+.album-wall{
+  margin: 60px 0 100px;
   padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+.album-card-link{
+  display: block;
+  cursor: pointer;
+}
+.album-card-cover{
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(10,10,12,0.06);
+  box-shadow: 0 20px 40px rgba(10,2,28,0.14);
+  transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out);
+}
+.album-card-cover img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s var(--ease-out);
+}
+.album-card-link:hover .album-card-cover{
+  transform: translateY(-6px);
+  box-shadow: 0 26px 50px rgba(10,2,28,0.22);
+}
+.album-card-link:hover .album-card-cover img{ transform: scale(1.06); }
+.album-card-meta{
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.album-card-title{
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 24px);
+  color: var(--ink);
+}
+.album-card-count{
   font-size: 11px;
   color: var(--ink-soft);
   letter-spacing: 0.04em;
 }
 
-.photo-full{ width: 100%; }
-.photo-full .ph{ width: 100%; aspect-ratio: 16/8; }
-
-.photo-pair{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 var(--gutter);
+/* ---------------------------------------------------------------------
+   Album header — simple back-link + title for a single category's page.
+   --------------------------------------------------------------------- */
+.album-header{
+  padding: 140px var(--gutter) 40px;
 }
-.photo-pair .ph{ aspect-ratio: 4/5; }
-.photo-pair .ph.short{ aspect-ratio: 4/3; align-self: end; }
-
-.contact-sheet{
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+.album-back{
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--purple);
+  margin-bottom: 24px;
 }
-.contact-sheet .ph{ aspect-ratio: 1/1; position: relative; }
-.contact-sheet .ph::after{
-  content: attr(data-frame);
-  position: absolute;
-  bottom: 6px; left: 8px;
-  font-size: 9px;
-  color: rgba(107,33,232,0.55);
+.album-header-title{
+  font-size: clamp(36px, 6vw, 72px);
+  color: var(--ink);
 }
-
-.photo-portrait{ max-width: 720px; margin: 0 auto; padding: 0 var(--gutter); }
-.photo-portrait .ph{ aspect-ratio: 3/4; }
-
-.detail-trio{
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 20px;
-  align-items: end;
-}
-.detail-trio .ph:nth-child(1){ aspect-ratio: 4/5; }
-.detail-trio .ph:nth-child(2){ aspect-ratio: 1/1; }
-.detail-trio .ph:nth-child(3){ aspect-ratio: 3/4; }
-
-.annotation-float{
-  position: relative;
-  max-width: 1400px;
-  margin: -30px auto 0;
-  padding: 0 var(--gutter);
-}
-.annotation-float .annotation{ display: inline-block; }
-
-@media (max-width: 760px){
-  .photo-pair, .detail-trio{ grid-template-columns: 1fr; }
-  .contact-sheet{ grid-template-columns: repeat(2, 1fr); }
+.album-header-count{
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--ink-soft);
 }

@@ -3,3 +3,8 @@ dist
 dist-ssr
 *.local
 .vite
+.claude
+test-results
+playwright-report
+blob-report
+playwright/.cache

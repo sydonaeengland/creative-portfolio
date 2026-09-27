@@ -1,0 +1,239 @@
+/* ==========================================================================
+   Hero — text column on the left, full-height photo filling the entire
+   right side. Scoped entirely under .hero so it cannot leak into other
+   pages. Nav is untouched (rendered outside this component, in App.jsx).
+   Static layout — no parallax.
+   ========================================================================== */
+
+.hero{
+  position: relative;
+  height: 100vh;
+  min-height: 720px;
+  max-height: 1160px;
+  color: #fff;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* -- single continuous background across the whole hero -- */
+.hero-bg{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(45% 40% at 20% 22%, rgba(190, 140, 255, 0.18), transparent 62%),
+    linear-gradient(165deg, #000000 0%, #1a0a3d 35%, var(--purple-deep) 70%, var(--purple) 100%);
+}
+.hero-bg::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+.hero::before{
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(2, 0, 8, 0.85) 0%, transparent 24%, transparent 74%, rgba(2, 0, 8, 0.85) 100%);
+}
+
+/* -- thin curved graphic-mark lines, subtle depth in the empty field -- */
+.hero-lines{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.hero-line-path{
+  stroke: rgba(220, 190, 255, 0.28);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+.hero-line-2{ stroke: rgba(220, 190, 255, 0.16); }
+
+/* -- left: text column, floats over the photo's soft-masked left edge
+      rather than sitting in a hard-edged separate panel -- */
+.hero-panel{
+  position: relative;
+  z-index: 2;
+  width: 54%;
+  max-width: 600px;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  padding: 140px 0 40px clamp(24px, 5vw, 64px);
+}
+
+.hero-watermark{
+  position: absolute;
+  left: -4%;
+  bottom: -0.1em;
+  z-index: -1;
+  font-family: var(--font-display);
+  font-size: clamp(160px, 20vw, 300px);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-title{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  line-height: 0.92;
+}
+.hero-title .sans{
+  font-family: var(--font-display);
+  font-size: clamp(56px, 7.4vw, 128px);
+  color: #fff;
+  text-shadow: 0 10px 34px rgba(8, 2, 22, 0.4);
+}
+.hero-title .sans:first-of-type{
+  color: var(--purple-tint);
+}
+.hero-title .sans:last-of-type{
+  max-width: none;
+  white-space: nowrap;
+}
+.hero-title .serif{
+  align-self: flex-start;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(22px, 2.4vw, 32px);
+  color: rgba(255, 255, 255, 0.75);
+  margin: 2px 0;
+}
+
+.hero-role{
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-disciplines{
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+}
+.hero-disciplines li{
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.4vw, 18px);
+  color: rgba(255, 255, 255, 0.92);
+  text-transform: uppercase;
+}
+.hero-disciplines .n{
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.hero-scroll{
+  margin-top: 24px;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.6);
+}
+.hero-scroll-arrow{
+  display: inline-block;
+  animation: hero-scroll-bob 2.2s ease-in-out infinite;
+}
+@keyframes hero-scroll-bob{
+  0%, 100%{ transform: translateY(0); }
+  50%{ transform: translateY(5px); }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-scroll-arrow{ animation: none; }
+}
+
+/* -- photo: sits full-bleed behind the text, with a wide soft mask on
+      its left edge so it dissolves into the purple field instead of
+      meeting it at a hard seam -- */
+.hero-photo-panel{
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.hero-photo-img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  filter: saturate(0.75) brightness(0.8);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 30%, #000 50%, #000 82%, rgba(0,0,0,0.4) 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 30%, #000 50%, #000 82%, rgba(0,0,0,0.4) 94%, transparent 100%);
+}
+.hero-photo-scrim{
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(4, 1, 12, 0.6) 0%, rgba(4,1,12,0.2) 30%, rgba(4,1,12,0.2) 68%, rgba(4, 1, 12, 0.7) 100%),
+    linear-gradient(100deg, transparent 60%, rgba(26, 10, 61, 0.5) 85%, rgba(74, 23, 184, 0.55) 100%);
+}
+
+/* ---------------------------------------------------------------------
+   Tablet
+   --------------------------------------------------------------------- */
+@media (max-width: 1100px){
+  .hero-panel{ width: 52%; max-width: 440px; padding-top: 128px; }
+}
+
+/* ---------------------------------------------------------------------
+   Mobile — stacked: text on top, photo below
+   --------------------------------------------------------------------- */
+@media (max-width: 760px){
+  .hero{
+    height: auto;
+    min-height: 100vh;
+    max-height: none;
+  }
+  .hero-panel{
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 100vh;
+    padding: 118px 20px 40px;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+  .hero-watermark{ display: none; }
+  .hero-title .sans{ font-size: clamp(42px, 13vw, 64px); }
+  .hero-title .sans:last-of-type{ white-space: normal; }
+  .hero-disciplines{ margin-top: 28px; padding-top: 24px; gap: 6px 22px; }
+  .hero-scroll{ margin-top: 24px; }
+  .hero-photo-img{
+    object-position: 50% 25%;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.5) 30%, #000 55%);
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.5) 30%, #000 55%);
+  }
+  .hero-photo-scrim{
+    background: linear-gradient(180deg, rgba(4, 1, 12, 0.7) 0%, rgba(4, 1, 12, 0.3) 35%, transparent 55%, rgba(4, 1, 12, 0.6) 100%);
+  }
+}

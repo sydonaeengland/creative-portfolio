@@ -122,66 +122,96 @@ h1,h2,h3,h4,p{ margin: 0; }
 .purple-field > *{ position: relative; z-index: 1; }
 
 /* -------------------------------------------------------------------------
-   Nav
+   Nav — floating rounded capsule: the wordmark sits outside on the left,
+   nav links live inside a pill-shaped, softly frosted dark bar centered
+   in the header. Always legible over any background (no blend-mode
+   trickery), with a bit of space around it so it reads as an object
+   floating on the page, not a bar stretched edge to edge.
    ------------------------------------------------------------------------- */
 .site-nav{
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 18px; left: 0; right: 0;
   z-index: 500;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px var(--gutter);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--ink);
-  background: rgba(254,253,251,0.82);
-  backdrop-filter: blur(10px) saturate(140%);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
-  border-bottom: 1px solid var(--hairline);
-}
-.site-nav a, .site-nav button{ color: inherit; }
-.on-purple-page .site-nav{
+  padding: 0 var(--gutter);
   color: #fff;
-  background: rgba(74,15,184,0.55);
-  border-bottom-color: var(--hairline-on-purple);
 }
+.site-nav a, .site-nav button{ color: #fff; }
 
 .nav-mark{
   font-family: var(--font-display);
-  font-size: 18px;
-  letter-spacing: 0;
+  font-size: clamp(13px, 1.5vw, 16px);
+  letter-spacing: 0.01em;
+  padding: 9px 16px;
+  background: rgba(20,10,40,0.55);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(10,2,28,0.35);
+  white-space: nowrap;
 }
 
 .nav-list{
   display: flex;
-  gap: 22px;
+  align-items: center;
+  gap: clamp(4px, 1vw, 8px);
+  background: rgba(20,10,40,0.55);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  padding: 6px;
+  box-shadow: 0 10px 30px rgba(10,2,28,0.35);
 }
 .nav-list a{
   position: relative;
-  padding-bottom: 2px;
-  transition: opacity .2s;
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background-color .25s var(--ease-out), color .25s var(--ease-out);
 }
-.nav-list a .n{ opacity: 0.5; margin-right: 4px; }
-.nav-list a:hover{ opacity: 0.7; }
-.nav-list a.is-current::after{
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: -3px;
-  height: 1px;
-  background: currentColor;
+.nav-list a .n{
+  font-size: 9px;
+  font-weight: 700;
+  opacity: 0.55;
+  margin-right: 6px;
 }
+.nav-list a:hover{ background: rgba(255,255,255,0.08); }
+.nav-list a.is-current{
+  background: #fff;
+  color: var(--ink);
+}
+.nav-list a.is-current .n{ opacity: 0.45; }
 
-.nav-toggle{ display: none; }
+.nav-toggle{
+  display: none;
+  color: #fff;
+  background: rgba(20,10,40,0.55);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  padding: 10px 18px;
+}
 
 @media (max-width: 860px){
   .nav-list{ display: none; }
   .nav-toggle{
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-weight: 700;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.02em;
   }
 }
 
@@ -336,16 +366,16 @@ h1,h2,h3,h4,p{ margin: 0; }
 .micro-footer{
   padding: 18px var(--gutter) 28px;
   font-size: 11px;
-  color: var(--ink-soft);
+  color: rgba(255,255,255,0.55);
+  background: #0a0a0c;
   display: flex;
   justify-content: space-between;
 }
-.on-purple .micro-footer{ color: rgba(255,255,255,0.55); }
 
 /* -------------------------------------------------------------------------
-   Loading screen — one move: the wordmark wipes in line by line via a
-   tight clip-path reveal, with a single thin rule underneath as the only
-   secondary accent. Clean gradient background, nothing else on screen.
+   Loading screen — plain, slow opacity fades only (no clip-path wipes or
+   scaling) to avoid any flicker/strobe risk. Clean gradient background,
+   nothing else on screen.
    ------------------------------------------------------------------------- */
 .loading-screen{
   position: fixed;
@@ -357,13 +387,28 @@ h1,h2,h3,h4,p{ margin: 0; }
   justify-content: center;
 }
 
+.loading-orb{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(70vw, 520px);
+  height: min(70vw, 520px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.05) 45%, transparent 72%);
+  filter: blur(2px);
+  animation: loading-orb-pulse 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes loading-orb-pulse{
+  0%, 100% { opacity: 0.55; transform: translate(-50%, -50%) scale(0.94); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.04); }
+}
+
 .loading-mark{
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.loading-mark-line-wrap{
-  overflow: hidden;
 }
 .loading-mark-line{
   display: block;
@@ -371,11 +416,88 @@ h1,h2,h3,h4,p{ margin: 0; }
   letter-spacing: 0.01em;
   line-height: 1.05;
   color: #fff;
+  white-space: pre;
+}
+.loading-letter{
+  display: inline-block;
+  will-change: transform, opacity;
 }
 .loading-mark-rule{
-  margin-top: 22px;
+  margin-top: 26px;
   width: 64px;
   height: 2px;
-  background: #fff;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
   transform-origin: center;
+}
+.loading-mark-tagline{
+  margin: 22px 0 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  font-size: clamp(11px, 1.6vw, 14px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0 24px;
+}
+.loading-mark-tagline-prefix{
+  color: rgba(255, 255, 255, 0.5);
+}
+.loading-mark-tagline-cycle{
+  position: relative;
+  display: inline-block;
+  min-width: 9ch;
+  color: #fff;
+  font-weight: 600;
+  text-align: left;
+}
+.loading-mark-tagline-cycle span{
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .loading-orb{ animation: none; opacity: 0.7; }
+}
+
+/* -------------------------------------------------------------------------
+   Back to top — floating pill, bottom-right, only once you've scrolled
+   past roughly one viewport. Matches the nav's floating capsule language.
+   ------------------------------------------------------------------------- */
+.back-to-top{
+  position: fixed;
+  right: var(--gutter);
+  bottom: 24px;
+  z-index: 800;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: var(--purple);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(10,2,28,0.28);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out), background-color 0.2s var(--ease-out);
+}
+.back-to-top.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.back-to-top:hover{
+  background: var(--purple-deep);
+}
+@media (max-width: 700px){
+  .back-to-top{
+    width: 42px;
+    height: 42px;
+    bottom: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  .back-to-top{ transition: opacity 0.15s linear; transform: none; }
 }

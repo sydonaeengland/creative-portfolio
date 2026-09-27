@@ -2,12 +2,10 @@
 // "Next Archive" footer link so the numbered system stays consistent.
 export const SECTIONS = [
   { num: '00', short: 'HOME', full: 'Home', path: '/' },
-  { num: '01', short: 'JOURNEY', full: 'Journey', path: '/journey' },
-  { num: '02', short: 'DESIGN', full: 'Design', path: '/design' },
-  { num: '03', short: 'PHOTO', full: 'Photo', path: '/photography' },
-  { num: '04', short: 'VIDEO', full: 'Video Editing', path: '/video-editing' },
-  { num: '05', short: 'SOCIAL', full: 'Social', path: '/social' },
-  { num: '06', short: 'CONTACT', full: 'Contact', path: '/contact' },
+  { num: '01', short: 'DESIGN', full: 'Design', path: '/design' },
+  { num: '02', short: 'PHOTO', full: 'Photo', path: '/photography' },
+  { num: '03', short: 'VIDEOGRAPHY', full: 'Videography', path: '/video-editing' },
+  { num: '04', short: 'SOCIAL MEDIA', full: 'Social Media', path: '/social' },
 ];
 
 export function nextSection(path) {

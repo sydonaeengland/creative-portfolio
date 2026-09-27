@@ -3,6 +3,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SECTIONS } from '../data/routes.js';
 
+function isCurrent(location, path) {
+  const [pathname, hash] = path.split('#');
+  if (hash) return location.pathname === (pathname || '/') && location.hash === `#${hash}`;
+  return location.pathname === path;
+}
+
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -19,11 +25,11 @@ export default function Nav() {
   return (
     <>
       <nav className="site-nav">
-        <Link to="/" className="nav-mark">SYD°</Link>
+        <Link to="/" className="nav-mark">SYDONAE ENGLAND</Link>
         <ul className="nav-list">
           {SECTIONS.map((s) => (
             <li key={s.path}>
-              <Link to={s.path} className={location.pathname === s.path ? 'is-current' : ''}>
+              <Link to={s.path} className={isCurrent(location, s.path) ? 'is-current' : ''}>
                 <span className="n">{s.num}</span>{s.short}
               </Link>
             </li>
