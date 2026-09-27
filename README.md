@@ -77,20 +77,4 @@ public/assets/             — real media (served as-is, referenced by URL)
 tests/                     — Playwright end-to-end tests (see Testing below)
 ```
 
-## Swapping in real media
 
-`<Placeholder label="..." src={...} />` renders a labeled placeholder block
-until you pass `src` (a path under `public/assets/...`), at which point it
-renders the real image. Drop files into `public/assets/graphics`,
-`public/assets/photography`, or `public/assets/video`, then update the
-relevant data file (`designProjects.js`, `photographyProjects.js`, etc.) or
-page component with the new `src`.
-
-## RAW / FINAL toggle
-
-```jsx
-<RawFinalToggle
-  raw={<Placeholder label="Sketch" />}
-  final={<Placeholder label="Final" src="/assets/graphics/final.png" />}
-/>
-```
