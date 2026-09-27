@@ -17,10 +17,10 @@ const SOCIAL_STATS = [
 ];
 
 const CAROUSEL_ITEMS = [
-  { src: '/assets/graphics/dare-to-dream-instagram-grid-01.jpeg', label: 'DARE TO DREAM, INSTAGRAM GRID', alt: 'Dare to Dream Sporting Academy Instagram grid' },
-  { src: '/assets/graphics/uwi-computing-instagram-grid.jpeg', label: 'UWI COMPUTING, INSTAGRAM GRID', alt: 'UWI Computing Instagram grid' },
-  { src: '/assets/graphics/dare-to-dream-instagram-grid-02.jpeg', label: 'DARE TO DREAM, INSTAGRAM GRID', alt: 'Dare to Dream Sporting Academy Instagram grid' },
-  { src: '/assets/graphics/social-media-page.jpeg', label: 'DARE TO DREAM, INSTAGRAM PROFILE GRID', alt: 'Dare to Dream Sporting Academy Instagram profile grid' },
+  { src: '/creative-portfolio/assets/graphics/dare-to-dream-instagram-grid-01.jpeg', label: 'DARE TO DREAM, INSTAGRAM GRID', alt: 'Dare to Dream Sporting Academy Instagram grid' },
+  { src: '/creative-portfolio/assets/graphics/uwi-computing-instagram-grid.jpeg', label: 'UWI COMPUTING, INSTAGRAM GRID', alt: 'UWI Computing Instagram grid' },
+  { src: '/creative-portfolio/assets/graphics/dare-to-dream-instagram-grid-02.jpeg', label: 'DARE TO DREAM, INSTAGRAM GRID', alt: 'Dare to Dream Sporting Academy Instagram grid' },
+  { src: '/creative-portfolio/assets/graphics/social-media-page.jpeg', label: 'DARE TO DREAM, INSTAGRAM PROFILE GRID', alt: 'Dare to Dream Sporting Academy Instagram profile grid' },
 ];
 
 export default function Social() {

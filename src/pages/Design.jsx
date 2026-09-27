@@ -144,21 +144,21 @@ export default function Design() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}
-            style={{ backgroundImage: "url('/assets/graphics/dare-to-dream-kick4urheart-under10-champions.png')" }}
+            style={{ backgroundImage: "url('/creative-portfolio/assets/graphics/dare-to-dream-kick4urheart-under10-champions.png')" }}
           />
           <motion.div
             className="design-hero-tile design-hero-tile-2"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE, delay: 0.45 }}
-            style={{ backgroundImage: "url('/assets/graphics/uwi-computing-meet-the-exec-sydonae-england.png')" }}
+            style={{ backgroundImage: "url('/creative-portfolio/assets/graphics/uwi-computing-meet-the-exec-sydonae-england.png')" }}
           />
           <motion.div
             className="design-hero-tile design-hero-tile-3"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE, delay: 0.6 }}
-            style={{ backgroundImage: "url('/assets/graphics/dreamscape-villa-summer-bookings-cover.png')" }}
+            style={{ backgroundImage: "url('/creative-portfolio/assets/graphics/dreamscape-villa-summer-bookings-cover.png')" }}
           />
           <div className="design-hero-scrim" aria-hidden="true" />
           <motion.span

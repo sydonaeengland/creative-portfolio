@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { appUrl, appUrlPattern } from './app-url.ts';
 
 test.describe('photography index', () => {
   test('renders an album card for every category', async ({ page }) => {
-    await page.goto('/photography');
+    await page.goto(appUrl('/photography'));
     await page.waitForLoadState('networkidle');
 
     const cards = page.locator('.album-card');
@@ -10,18 +11,18 @@ test.describe('photography index', () => {
   });
 
   test('clicking an album card navigates to its slugged route', async ({ page }) => {
-    await page.goto('/photography');
+    await page.goto(appUrl('/photography'));
     await page.waitForLoadState('networkidle');
 
     await page.locator('.album-card-link', { hasText: 'Match Day' }).click();
-    await expect(page).toHaveURL('/photography/match-day');
+    await expect(page).toHaveURL(appUrlPattern('/photography/match-day'));
     await expect(page.locator('.album-header-title')).toHaveText('Match Day');
   });
 });
 
 test.describe('photography album (detail study - small set)', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/photography/detail-study');
+    await page.goto(appUrl('/photography/detail-study'));
     await page.locator('.justified-card').first().waitFor();
   });
 
@@ -33,7 +34,7 @@ test.describe('photography album (detail study - small set)', () => {
 
   test('back link returns to photography index', async ({ page }) => {
     await page.locator('.album-back').click();
-    await expect(page).toHaveURL('/photography');
+    await expect(page).toHaveURL(appUrlPattern('/photography'));
   });
 
   test('opening a photo shows the lightbox', async ({ page }) => {
@@ -82,7 +83,7 @@ test.describe('photography album (detail study - small set)', () => {
 });
 
 test('unknown album slug redirects to photography index', async ({ page }) => {
-  await page.goto('/photography/not-a-real-category');
+  await page.goto(appUrl('/photography/not-a-real-category'));
   await page.waitForLoadState('networkidle');
-  await expect(page).toHaveURL('/photography');
+  await expect(page).toHaveURL(appUrlPattern('/photography'));
 });

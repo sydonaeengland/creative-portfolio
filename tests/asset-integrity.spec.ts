@@ -1,4 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
+import { appUrl } from './app-url.ts';
 
 const PAGES = ['/', '/design', '/photography', '/video-editing', '/social'];
 
@@ -11,7 +12,7 @@ async function collectFailedMedia(page: Page, path: string) {
       failed.push(`${res.status()} ${url}`);
     }
   });
-  await page.goto(path);
+  await page.goto(appUrl(path));
   await page.waitForLoadState('networkidle');
   return failed;
 }
@@ -41,13 +42,13 @@ test.describe('media asset integrity', () => {
   }
 
   test('every rendered <img> on the design page has a natural width > 0', async ({ page }) => {
-    await page.goto('/design');
+    await page.goto(appUrl('/design'));
     await page.locator('.poster-card, .justified-card').first().waitFor();
     await expectAllImagesLoaded(page);
   });
 
   test('every rendered <img> on the photography album pages has a natural width > 0', async ({ page }) => {
-    await page.goto('/photography/detail-study');
+    await page.goto(appUrl('/photography/detail-study'));
     await page.locator('.justified-card').first().waitFor();
     await expectAllImagesLoaded(page);
   });

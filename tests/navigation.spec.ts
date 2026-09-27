@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { appUrl, appUrlPattern } from './app-url.ts';
 
 const SECTIONS = [
   { short: 'HOME', path: '/' },
@@ -17,7 +18,7 @@ test.describe('page loads', () => {
       });
       page.on('pageerror', (err) => errors.push(err.message));
 
-      const response = await page.goto(section.path);
+      const response = await page.goto(appUrl(section.path));
       expect(response?.status()).toBeLessThan(400);
       await page.waitForLoadState('networkidle');
 
@@ -29,30 +30,30 @@ test.describe('page loads', () => {
 test.describe('primary navigation', () => {
   for (const section of SECTIONS) {
     test(`nav link navigates to ${section.short}`, async ({ page }) => {
-      await page.goto('/');
+      await page.goto(appUrl('/'));
       await page.waitForLoadState('networkidle');
 
       await page.locator('.site-nav .nav-list a', { hasText: section.short }).click();
-      await expect(page).toHaveURL(section.path);
+      await expect(page).toHaveURL(appUrlPattern(section.path));
     });
   }
 
   test('nav mark links back to home', async ({ page }) => {
-    await page.goto('/design');
+    await page.goto(appUrl('/design'));
     await page.waitForLoadState('networkidle');
     await page.locator('.nav-mark').click();
-    await expect(page).toHaveURL('/');
+    await expect(page).toHaveURL(appUrlPattern('/'));
   });
 
   test('mobile menu opens and navigates', async ({ page }) => {
     await page.setViewportSize({ width: 480, height: 800 });
-    await page.goto('/');
+    await page.goto(appUrl('/'));
     await page.waitForLoadState('networkidle');
 
     await page.locator('.nav-toggle').click();
     await expect(page.locator('.mobile-menu')).toBeVisible();
 
     await page.locator('.mobile-menu-list a', { hasText: 'Design' }).click();
-    await expect(page).toHaveURL('/design');
+    await expect(page).toHaveURL(appUrlPattern('/design'));
   });
 });

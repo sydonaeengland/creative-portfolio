@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { appUrl, appUrlPattern } from './app-url.ts';
 
 test.describe('design page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/design');
+    await page.goto(appUrl('/design'));
     await page.locator('.poster-card, .justified-card').first().waitFor();
   });
 
@@ -27,6 +28,6 @@ test.describe('design page', () => {
 
   test('next archive link goes to photography', async ({ page }) => {
     await page.locator('.next-archive').click();
-    await expect(page).toHaveURL('/photography');
+    await expect(page).toHaveURL(appUrlPattern('/photography'));
   });
 });

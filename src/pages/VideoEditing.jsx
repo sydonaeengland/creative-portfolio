@@ -13,27 +13,27 @@ const VIDEO_GROUPS = [
   {
     category: 'Jamaica Day',
     items: [
-      { cutLabel: 'CUT 01', label: 'JAMAICA DAY', src: '/assets/video/video-clip-03.mp4' },
+      { cutLabel: 'CUT 01', label: 'JAMAICA DAY', src: '/creative-portfolio/assets/video/video-clip-03.mp4' },
     ],
   },
   {
     category: 'Airbnb',
     items: [
-      { cutLabel: 'CUT 02', label: 'AIRBNB', src: '/assets/video/video-clip-04.mp4' },
-      { cutLabel: 'CUT 03', label: 'AIRBNB', src: '/assets/video/video-clip-05.mp4' },
+      { cutLabel: 'CUT 02', label: 'AIRBNB', src: '/creative-portfolio/assets/video/video-clip-04.mp4' },
+      { cutLabel: 'CUT 03', label: 'AIRBNB', src: '/creative-portfolio/assets/video/video-clip-05.mp4' },
     ],
   },
   {
     category: 'Clothing Brand',
     items: [
-      { cutLabel: 'CUT 04', label: 'CLOTHING BRAND', src: '/assets/video/video-clip-01.mp4' },
-      { cutLabel: 'CUT 05', label: 'CLOTHING BRAND', src: '/assets/video/video-clip-02.mp4' },
+      { cutLabel: 'CUT 04', label: 'CLOTHING BRAND', src: '/creative-portfolio/assets/video/video-clip-01.mp4' },
+      { cutLabel: 'CUT 05', label: 'CLOTHING BRAND', src: '/creative-portfolio/assets/video/video-clip-02.mp4' },
     ],
   },
   {
     category: 'Sports',
     items: [
-      { cutLabel: 'CUT 06', label: 'SPORTS', src: '/assets/video/video-clip-06.mp4' },
+      { cutLabel: 'CUT 06', label: 'SPORTS', src: '/creative-portfolio/assets/video/video-clip-06.mp4' },
     ],
   },
 ];

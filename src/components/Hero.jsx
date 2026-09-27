@@ -99,7 +99,7 @@ export default function Hero() {
 
       <div className="hero-photo-panel">
         <motion.img
-          src="/assets/photography/sydonae-england-collage.png"
+          src="/creative-portfolio/assets/photography/sydonae-england-collage.png"
           alt="Sydonae England behind the camera"
           className="hero-photo-img"
           initial={{ opacity: 0, scale: 1.05 }}

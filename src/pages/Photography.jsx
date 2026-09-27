@@ -66,21 +66,21 @@ export default function Photography() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}
-            style={{ backgroundImage: "url('/assets/photography/lifestyle-portrait-braids.jpg')" }}
+            style={{ backgroundImage: "url('/creative-portfolio/assets/photography/lifestyle-portrait-braids.jpg')" }}
           />
           <motion.div
             className="photo-hero-tile photo-hero-tile-2"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE, delay: 0.45 }}
-            style={{ backgroundImage: "url('/assets/photography/dare-to-dream-overseas-team-photo-02.jpg')" }}
+            style={{ backgroundImage: "url('/creative-portfolio/assets/photography/dare-to-dream-overseas-team-photo-02.jpg')" }}
           />
           <motion.div
             className="photo-hero-tile photo-hero-tile-3"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE, delay: 0.6 }}
-            style={{ backgroundImage: "url('/assets/photography/dare-to-dream-allstar-match-day-15.jpg')" }}
+            style={{ backgroundImage: "url('/creative-portfolio/assets/photography/dare-to-dream-allstar-match-day-15.jpg')" }}
           />
           <div className="photo-hero-scrim" aria-hidden="true" />
           <motion.span

@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { appUrl, appUrlPattern } from './app-url.ts';
 
 test.describe('video editing page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/video-editing');
+    await page.goto(appUrl('/video-editing'));
     await page.waitForLoadState('networkidle');
   });
 
@@ -21,13 +22,13 @@ test.describe('video editing page', () => {
 
   test('next archive link goes to social', async ({ page }) => {
     await page.locator('.next-archive').click();
-    await expect(page).toHaveURL('/social');
+    await expect(page).toHaveURL(appUrlPattern('/social'));
   });
 });
 
 test.describe('social page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/social');
+    await page.goto(appUrl('/social'));
     await page.waitForLoadState('networkidle');
   });
 
@@ -44,6 +45,6 @@ test.describe('social page', () => {
 
   test('next archive link cycles back to home', async ({ page }) => {
     await page.locator('.next-archive').click();
-    await expect(page).toHaveURL('/');
+    await expect(page).toHaveURL(appUrlPattern('/'));
   });
 });
